@@ -1,11 +1,14 @@
 // Table styles
+@import '../base/color';
+@import '../base/typography';
 $document-table-column-1-width: 7%;
 $document-table-column-2-width: 35%;
 $document-table-column-3-width: 17%;
 $document-table-column-4-width: $document-table-column-3-width;
 $document-table-column-5-width: calc(100% - #{$document-table-column-1-width} - #{$document-table-column-2-width} - #{$document-table-column-3-width}*2);
+$document-table-border: 1px solid #dee2e6;
 table.document-table {
-    font-size: 0.875em;
+    font-size: $base-font-size;
     colgroup {
         col {
             &:nth-child(1) {
@@ -26,64 +29,97 @@ table.document-table {
         }
     }
     th {
+        border-top: transparent;
+        font-weight: normal;
         &:nth-child(1) {
             text-align: right;
         }
-        font-weight: normal;
+        &:hover {
+            background-color: $background-light-color;
+        }
+        button.header-button {
+            font-size: inherit;
+            font-weight: normal;
+            background-color: transparent;
+            border: 0px;
+            padding: 0px;
+            width: 100%;
+            text-align: left;
+            &:focus {
+                border-color: #fff;
+                box-shadow: 0 0 0 0.25rem rgba(256, 256, 256, 1);
+            }
+        }
     }
     tbody {
         tr {
+            &:hover {
+                background-color: $background-light-color;
+            }
             &:last-child {
-                border-bottom: 1px solid #dee2e6;
+                border-bottom: $document-table-border;
             }
             td {
+                position: relative;
                 &:nth-child(1) {
                     text-align: right;
                 }
+                &:nth-child(2) {
+                    cursor: pointer;
+                }
+                // from element 3th and above
                 &:nth-child(n+3) {
                     font-weight: 300;
-                    font-size: 0.875em;
                 }
             }
         }
     }
 }
 
-@media screen and (max-width: 900px) {
-    table {
-        border: 0;
-    }
-    table caption {
-        font-size: 1.3em;
-    }
-    table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-    table tr {
-        border-bottom: 3px solid #ddd;
-        display: block;
-        margin-bottom: .625em;
-    }
-    table td {
-        border-bottom: 1px solid #ddd;
-        display: block;
-        font-size: .8em;
-        text-align: right;
-    }
-    table td::before {
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-    table td:last-child {
-        border-bottom: 0;
+@media screen and (max-width: 992px) {
+    table.document-table {
+        min-width: 390px;
+        font-size: $base-font-size;
+        thead {
+            border: transparent;
+            clip: rect(0 0 0 0);
+            height: 0px;
+            margin: 0px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 0px;
+        }
+        tbody {
+            tr {
+                border-bottom: $document-table-border;
+                display: block;
+                td {
+                    display: block;
+                    text-align: right;
+                    padding: 0.75em 0.5em;
+                    text-align: left;
+                    &:before {
+                        content: attr(data-label);
+                        float: left;
+                        font-weight: bold;
+                        font-style: italic;
+                        width: 140px;
+                        text-align: left;
+                        padding-left: 0.5em;
+                    }
+                    &:nth-child(1) {
+                        background-color: $background-light-color !important;
+                    }
+                    // from 1 to 4th elements
+                    &:nth-child(-n+4) {
+                        border: $document-table-border;
+                    }
+                    &:last-child {
+                        border-bottom: 0;
+                    }
+                }
+            }
+        }
     }
 }

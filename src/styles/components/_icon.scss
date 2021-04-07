@@ -1,0 +1,20 @@
+@import '../base/color';
+.plus-icon {
+    font-size: 19px;
+}
+
+.new-file-icon {
+    position: absolute;
+    left: 0.5em;
+    top: 1em;
+    font-size: 11px;
+}
+
+@media screen and (max-width: 992px) {
+    .new-file-icon {
+        position: absolute;
+        left: 138px;
+        top: 1em;
+        font-size: 11px;
+    }
+}

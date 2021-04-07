@@ -8,67 +8,67 @@
 </head>
 
 <body>
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 pl-1" id="navigation-menu">
-      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="navbar-collapse collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown mr-2">
-            <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-              <i class="bi bi-plus nav-link-icon plus-icon mr-1"></i>New
-              <i class="bi bi-chevron-down"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Document</a>
-              <a class="dropdown-item" href="#">File</a>
-              <a class="dropdown-item" href="#">Folder</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown mr-2">
-            <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-              <i class="bi bi-upload nav-link-icon mr-2"></i>Upload
-              <i class="bi bi-chevron-down"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">From your computer</a>
-            </div>
-          </li>
-          <li class="nav-item mr-2">
-            <a class="nav-link" href="#">
-              <i class="bi bi-arrow-repeat nav-link-icon mr-2"></i>Sync
-            </a>
-          </li>
-          <li class="nav-item mr-2">
-            <a class="nav-link" href="#">
-              <img class="mr-1" src="https://img.icons8.com/color/48/000000/ms-excel.png" height="28px" />Export to Excel
-            </a>
-          </li>
-          <li class="nav-item dropdown mr-2">
-            <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-              <i class="bi bi-diagram-3-fill nav-link-icon mr-2"></i>Flow
-              <i class="bi bi-chevron-down"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Main flow</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link mt-1 pl-0" href="#" role="button" data-toggle="dropdown">
-              <i class="bi bi-three-dots"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">New feature</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 pl-1 py-1" id="navigation-menu">
+    <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown mr-1 ml-2 ml-lg-0">
+          <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+            <i class="bi bi-plus nav-link-icon plus-icon mr-2"></i>New
+            <i class="bi bi-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Document</a>
+            <a class="dropdown-item" href="#">File</a>
+            <a class="dropdown-item" href="#">Folder</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown mr-1 ml-2 ml-lg-0">
+          <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+            <i class="bi bi-upload nav-link-icon mr-2"></i>Upload
+            <i class="bi bi-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">From your computer</a>
+          </div>
+        </li>
+        <li class="nav-item mr-1 ml-2 ml-lg-0">
+          <a class="nav-link" href="#">
+            <i class="bi bi-arrow-repeat nav-link-icon mr-2"></i>Sync
+          </a>
+        </li>
+        <li class="nav-item mr-1 ml-2 ml-lg-0">
+          <a class="nav-link" href="#">
+            <img class="mr-2" src="https://img.icons8.com/color/48/000000/ms-excel.png" width="18" />Export to Excel
+          </a>
+        </li>
+        <li class="nav-item dropdown mr-1 ml-2 ml-lg-0">
+          <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+            <i class="bi bi-diagram-3-fill nav-link-icon mr-2"></i>Flow
+            <i class="bi bi-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Main flow</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown ml-2 ml-lg-0">
+          <a class="nav-link mt-1 pl-0" href="#" role="button" data-toggle="dropdown">
+            <i class="bi bi-three-dots"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">New feature</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container px-0">
 
-    <p class="h4 font-weight-light mb-4 ml-lg-4">Documents</p>
+    <p class="h4 font-weight-light mb-3">Documents</p>
 
-    <div class="table-responsive px-lg-4">
+    <div class="table-responsive">
       <table class="table document-table">
         <colgroup>
           <col span="1">
@@ -79,56 +79,56 @@
         </colgroup>
         <thead>
           <tr>
-            <th scope="col"><i class="bi bi-file-earmark"></i></th>
-            <th scope="col">
+            <th class="th-file-type" scope="col"><i class="bi bi-file-earmark"></i></th>
+            <th class="th-file-name" scope="col">
               <button class="btn header-button">Name<i class="bi bi-chevron-down ml-2"></i></button>
             </th>
-            <th scope="col">
+            <th class="th-modified-date" scope="col">
               <button class="btn header-button">Modified<i class="bi bi-chevron-down ml-2"></i></button>
             </th>
-            <th scope="col">
+            <th class="th-modified-by" scope="col">
               <button class="btn header-button">Modified By<i class="bi bi-chevron-down ml-2"></i></button>
             </th>
-            <th scope="col">
+            <th class="th-new-column" scope="col">
               <button class="btn header-button"><i class="bi bi-plus plus-icon mr-1"></i>Add column</button>
             </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td data-label="file-type"><i class="fas fa-folder mt-1"></i></td>
-            <td data-label="file-name">CAS</td>
-            <td data-label="modified-date">April 30</td>
-            <td data-label="modified-by">Megan Bowen</td>
-            <td data-label="for-new-column"></td>
+            <td class="td-file-type" data-label="File Type"><i class="fas fa-folder mt-1"></i></td>
+            <td class="td-file-name" data-label="Name">CAS</td>
+            <td class="td-modified-date" data-label="Modified">April 30</td>
+            <td class="td-modified-by" data-label="Modified By">Megan Bowen</td>
+            <td class="td-new-column"></td>
           </tr>
           <tr>
-            <td data-label="file-type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="28" /></td>
-            <td data-label="file-name">CoasterAndBargeLoading.xlsx</td>
-            <td data-label="modified-date">A few second ago</td>
-            <td data-label="modified-by">Administrator MOD</td>
-            <td data-label="for-new-column"></td>
+            <td class="td-file-type" data-label="File Type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="22px" /></td>
+            <td class="td-file-name" data-label="Name"><i class="fas fa-exclamation-circle new-file-icon"></i>CoasterAndBargeLoading.xlsx</td>
+            <td class="td-modified-date" data-label="Modified">A few second ago</td>
+            <td class="td-modified-by" data-label="Modified By">Administrator MOD</td>
+            <td class="td-new-column"></td>
           </tr>
           <tr>
-            <td data-label="file-type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="28" /></td>
-            <td data-label="file-name">RevenueByServices.xlsx</td>
-            <td data-label="modified-date">A few second ago</td>
-            <td data-label="modified-by">Administrator MOD</td>
-            <td data-label="for-new-column"></td>
+            <td class="td-file-type" data-label="File Type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="22px" /></td>
+            <td class="td-file-name" data-label="Name"><i class="fas fa-exclamation-circle new-file-icon"></i>RevenueByServices.xlsx</td>
+            <td class="td-modified-date" data-label="Modified">A few second ago</td>
+            <td class="td-modified-by" data-label="Modified By">Administrator MOD</td>
+            <td class="td-new-column"></td>
           </tr>
           <tr>
-            <td data-label="file-type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="28" /></td>
-            <td data-label="file-name">RevenueByServices2016.xlsx</td>
-            <td data-label="modified-date">A few second ago</td>
-            <td data-label="modified-by">Administrator MOD</td>
-            <td data-label="for-new-column"></td>
+            <td class="td-file-type" data-label="File Type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="22px" /></td>
+            <td class="td-file-name" data-label="Name"><i class="fas fa-exclamation-circle new-file-icon"></i>RevenueByServices2016.xlsx</td>
+            <td class="td-modified-date" data-label="Modified">A few second ago</td>
+            <td class="td-modified-by" data-label="Modified By">Administrator MOD</td>
+            <td class="td-new-column"></td>
           </tr>
           <tr>
-            <td data-label="file-type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="28" /></td>
-            <td data-label="file-name">RevenueByServices2017.xlsx</td>
-            <td data-label="modified-date">A few second ago</td>
-            <td data-label="modified-by">Administrator MOD</td>
-            <td data-label="for-new-column"></td>
+            <td class="td-file-type" data-label="File Type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="22px" /></td>
+            <td class="td-file-name" data-label="Name"><i class="fas fa-exclamation-circle new-file-icon"></i>RevenueByServices2017.xlsx</td>
+            <td class="td-modified-date" data-label="Modified">A few second ago</td>
+            <td class="td-modified-by" data-label="Modified By">Administrator MOD</td>
+            <td class="td-new-column"></td>
           </tr>
         </tbody>
       </table>
