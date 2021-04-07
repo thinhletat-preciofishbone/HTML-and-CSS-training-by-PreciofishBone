@@ -1,1 +1,19 @@
 // Header styles
+$nav-link-icon-color: #b32179;
+$nav-link-icon-alpha: 1.0;
+$dropdown-menu-padding-top: 0.25em;
+$dropdown-menu-padding-bottom: 0.25em;
+nav#navigation-menu {
+    ul.navbar-nav {
+        li.nav-item {
+            font-size: 0.9em;
+            a.nav-link {
+                color: black;
+            }
+            div.dropdown-menu {
+                padding-top: $dropdown-menu-padding-top;
+                padding-bottom: $dropdown-menu-padding-bottom;
+            }
+        }
+    }
+}

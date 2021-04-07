@@ -3,133 +3,128 @@
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="dist/css/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="dist/css/font-awesome/css/all.css">
+  <link rel="stylesheet" href="dist/css/home-page.css">
 </head>
 
 <body>
   <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 pl-1" id="navigation-menu">
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown mr-2">
+            <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+              <i class="bi bi-plus nav-link-icon plus-icon mr-1"></i>New
+              <i class="bi bi-chevron-down"></i>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Document</a>
+              <a class="dropdown-item" href="#">File</a>
+              <a class="dropdown-item" href="#">Folder</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown mr-2">
+            <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+              <i class="bi bi-upload nav-link-icon mr-2"></i>Upload
+              <i class="bi bi-chevron-down"></i>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">From your computer</a>
+            </div>
+          </li>
+          <li class="nav-item mr-2">
+            <a class="nav-link" href="#">
+              <i class="bi bi-arrow-repeat nav-link-icon mr-2"></i>Sync
+            </a>
+          </li>
+          <li class="nav-item mr-2">
+            <a class="nav-link" href="#">
+              <img class="mr-1" src="https://img.icons8.com/color/48/000000/ms-excel.png" height="28px" />Export to Excel
+            </a>
+          </li>
+          <li class="nav-item dropdown mr-2">
+            <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+              <i class="bi bi-diagram-3-fill nav-link-icon mr-2"></i>Flow
+              <i class="bi bi-chevron-down"></i>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Main flow</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link mt-1 pl-0" href="#" role="button" data-toggle="dropdown">
+              <i class="bi bi-three-dots"></i>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">New feature</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
+    <p class="h4 font-weight-light mb-4 ml-4">Documents</p>
+
+    <table class="table document-table ml-4">
+      <colgroup>
+        <col span="1">
+        <col span="1">
+        <col span="1">
+        <col span="1">
+        <col span="1">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col"><i class="bi bi-file-earmark"></i></th>
+          <th scope="col">Name<i class="bi bi-chevron-down ml-2"></i></th>
+          <th scope="col">Modified<i class="bi bi-chevron-down ml-2"></i></th>
+          <th scope="col">Modified By<i class="bi bi-chevron-down ml-2"></i></th>
+          <th scope="col"><i class="bi bi-plus plus-icon mr-1"></i>Add column</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="file-type"><i class="fas fa-folder mt-1"></i></td>
+          <td data-label="file-name">CAS</td>
+          <td data-label="modified-date">April 30</td>
+          <td data-label="modified-by">Megan Bowen</td>
+          <td data-label="for-new-column"></td>
+        </tr>
+        <tr>
+          <td data-label="file-type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="28" /></td>
+          <td data-label="file-name">CoasterAndBargeLoading.xlsx</td>
+          <td data-label="modified-date">A few second ago</td>
+          <td data-label="modified-by">Administrator MOD</td>
+          <td data-label="for-new-column"></td>
+        </tr>
+        <tr>
+          <td data-label="file-type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="28" /></td>
+          <td data-label="file-name">RevenueByServices.xlsx</td>
+          <td data-label="modified-date">A few second ago</td>
+          <td data-label="modified-by">Administrator MOD</td>
+          <td data-label="for-new-column"></td>
+        </tr>
+        <tr>
+          <td data-label="file-type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="28" /></td>
+          <td data-label="file-name">RevenueByServices2016.xlsx</td>
+          <td data-label="modified-date">A few second ago</td>
+          <td data-label="modified-by">Administrator MOD</td>
+          <td data-label="for-new-column"></td>
+        </tr>
+        <tr>
+          <td data-label="file-type"><img src="https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" height="28" /></td>
+          <td data-label="file-name">RevenueByServices2017.xlsx</td>
+          <td data-label="modified-date">A few second ago</td>
+          <td data-label="modified-by">Administrator MOD</td>
+          <td data-label="for-new-column"></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-    <div class="navbar-collapse collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item dropdown mr-1">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-            <i class="bi bi-plus-circle mr-1"></i>New
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Document</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown mr-1">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-            <i class="bi bi-file-arrow-up mr-1"></i>Upload
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">From your computer</a>
-          </div>
-        </li>
-        <li class="nav-item mr-1">
-          <a class="nav-link" href="#">
-            <i class="bi bi-arrow-repeat mr-1"></i>Sync
-          </a>
-        </li>
-        <li class="nav-item mr-1">
-          <a class="nav-link" href="#">
-            <img class="mr-1" src="https://img.icons8.com/color/48/000000/ms-excel.png" height="28px" />Export to Excel
-          </a>
-        </li>
-        <li class="nav-item dropdown mr-1">
-          <a class="nav-link dropdown-toggle" href="#">
-            <i class="bi bi-diagram-3 mr-1"></i></i>Flow
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link mt-1" href="#" role="button" data-toggle="dropdown">
-            <i class="bi bi-three-dots"></i>
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">New feature</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <p>start</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>asdasd</p>
-  <p>end</p>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

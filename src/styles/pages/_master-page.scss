@@ -2,14 +2,13 @@
 @import '../utilities/variables';
 @import '../utilities/functions';
 @import '../utilities/mixins';
-
 @import '../base/reset';
 @import '../base/typography';
-
+@import '../base/icon';
 @import '../layout/navigation';
 @import '../layout/grid';
 @import '../layout/header';
 @import '../layout/footer';
 @import '../layout/forms';
-
 @import '../components/buttons';
+@import '../components/tables';

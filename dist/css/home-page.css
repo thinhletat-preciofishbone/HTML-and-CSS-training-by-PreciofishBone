@@ -1,3 +1,142 @@
+nav#navigation-menu ul.navbar-nav li.nav-item {
+  font-size: 0.9em;
+}
+nav#navigation-menu ul.navbar-nav li.nav-item a.nav-link {
+  color: black;
+}
+nav#navigation-menu ul.navbar-nav li.nav-item div.dropdown-menu {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
 
+.nav-link-icon {
+  color: #b32179;
+}
+
+.plus-icon {
+  font-size: 19px;
+}
+
+nav#navigation-menu ul.navbar-nav li.nav-item {
+  font-size: 0.9em;
+}
+nav#navigation-menu ul.navbar-nav li.nav-item a.nav-link {
+  color: black;
+}
+nav#navigation-menu ul.navbar-nav li.nav-item div.dropdown-menu {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+table.document-table {
+  font-size: 0.875em;
+}
+table.document-table colgroup col:nth-child(1) {
+  width: 7%;
+}
+table.document-table colgroup col:nth-child(2) {
+  width: 35%;
+}
+table.document-table colgroup col:nth-child(3) {
+  width: 17%;
+}
+table.document-table colgroup col:nth-child(4) {
+  width: 17%;
+}
+table.document-table colgroup col:nth-child(5) {
+  width: calc(100% - 7% - 35% - 17%*2);
+}
+table.document-table th {
+  font-weight: normal;
+}
+table.document-table th:nth-child(1) {
+  text-align: right;
+}
+table.document-table tbody tr:last-child {
+  border-bottom: 1px solid #dee2e6;
+}
+table.document-table tbody tr td:nth-child(1) {
+  text-align: right;
+}
+table.document-table tbody tr td:nth-child(n+3) {
+  font-weight: 300;
+  font-size: 0.875em;
+}
+
+/*
+table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table caption {
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+}
+
+table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+
+table th,
+table td {
+    padding: .625em;
+    text-align: center;
+}
+
+table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        border: 0;
+    }
+    table caption {
+        font-size: 1.3em;
+    }
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+    table td::before {
+
+content: attr(data-label);
+float: left;
+font-weight: bold;
+text-transform: uppercase;
+
+}
+table td:last-child {
+    border-bottom: 0;
+}
+
+}
+*/
 
 /*# sourceMappingURL=home-page.css.map*/
