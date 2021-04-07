@@ -1,1 +1,14 @@
 // Button Styles
+button.header-button {
+    font-size: inherit;
+    font-weight: normal;
+    background-color: #fff;
+    border: 0px;
+    padding: 0px;
+    width: 100%;
+    text-align: left;
+    &:focus {
+        border-color: #fff;
+        box-shadow: 0 0 0 0.25rem rgba(256, 256, 256, 1);
+    }
+}
