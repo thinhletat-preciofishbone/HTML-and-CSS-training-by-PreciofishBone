@@ -1,73 +1,65 @@
 // Table styles
 @import '../base/color';
 @import '../base/typography';
-$document-table-column-1-width: 7%;
-$document-table-column-2-width: 35%;
-$document-table-column-3-width: 17%;
-$document-table-column-4-width: $document-table-column-3-width;
-$document-table-column-5-width: calc(100% - #{$document-table-column-1-width} - #{$document-table-column-2-width} - #{$document-table-column-3-width}*2);
-$document-table-border: 1px solid #dee2e6;
+$document-table-file-type-column-width: 7%;
+$document-table-file-name-column-width: 35%;
+$document-table-modified-time-column-width: 175px;
+$document-table-modified-by-column-width: $document-table-modified-time-column-width;
+$document-table-add-new-col-column-width: calc(100% - #{$document-table-file-type-column-width} - #{$document-table-file-name-column-width}) - $document-table-modified-time-column-width*2;
+$document-table-border: 1px solid $border-light-color;
 table.document-table {
     font-size: $base-font-size;
     colgroup {
         col {
-            &:nth-child(1) {
-                width: $document-table-column-1-width;
+            &.file-type {
+                width: $document-table-file-type-column-width;
             }
-            &:nth-child(2) {
-                width: $document-table-column-2-width;
+            &.file-name {
+                width: $document-table-file-name-column-width;
             }
-            &:nth-child(3) {
-                width: $document-table-column-3-width;
+            &.modified-time {
+                width: $document-table-modified-time-column-width;
             }
-            &:nth-child(4) {
-                width: $document-table-column-4-width;
+            &.modified-by {
+                width: $document-table-modified-by-column-width;
             }
-            &:nth-child(5) {
-                width: $document-table-column-5-width;
+            &.add-new-column {
+                width: $document-table-add-new-col-column-width;
             }
         }
     }
     th {
         border-top: transparent;
         font-weight: normal;
-        &:nth-child(1) {
-            text-align: right;
-        }
         &:hover {
-            background-color: $background-light-color;
+            background-color: $light-color;
         }
-        button.header-button {
-            font-size: inherit;
-            font-weight: normal;
-            background-color: transparent;
-            border: 0px;
-            padding: 0px;
-            width: 100%;
-            text-align: left;
-            &:focus {
-                border-color: #fff;
-                box-shadow: 0 0 0 0.25rem rgba(256, 256, 256, 1);
-            }
+        &.file-type {
+            text-align: right;
         }
     }
     tbody {
         tr {
+            padding-top: 30px;
             &:hover {
-                background-color: $background-light-color;
+                background-color: $light-color;
             }
             &:last-child {
                 border-bottom: $document-table-border;
             }
             td {
                 position: relative;
-                &:nth-child(1) {
+                &.file-type {
                     text-align: right;
+                    vertical-align: middle;
+                    i.bi-file-earmark-spreadsheet-fill {
+                        color: $excel-background-color;
+                    }
                 }
-                &:nth-child(2) {
+                &.file-name {
                     cursor: pointer;
                 }
-                // from element 3th and above
+                // from column 3th and after
                 &:nth-child(n+3) {
                     font-weight: 300;
                 }
@@ -108,10 +100,10 @@ table.document-table {
                         text-align: left;
                         padding-left: 0.5em;
                     }
-                    &:nth-child(1) {
-                        background-color: $background-light-color !important;
+                    &.file-type {
+                        background-color: $light-color;
                     }
-                    // from 1 to 4th elements
+                    // from column 1st to 4th
                     &:nth-child(-n+4) {
                         border: $document-table-border;
                     }
