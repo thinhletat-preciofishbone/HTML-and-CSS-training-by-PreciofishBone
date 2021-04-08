@@ -1,6 +1,6 @@
 // Table styles
 @import '../base/color';
-@import '../base/typography';
+@import '../utilities/fonts';
 $document-table-file-type-column-width: 7%;
 $document-table-file-name-column-width: 35%;
 $document-table-modified-time-column-width: 175px;
@@ -8,7 +8,7 @@ $document-table-modified-by-column-width: $document-table-modified-time-column-w
 $document-table-add-new-col-column-width: calc(100% - #{$document-table-file-type-column-width} - #{$document-table-file-name-column-width}) - $document-table-modified-time-column-width*2;
 $document-table-border: 1px solid $border-light-color;
 table.document-table {
-    font-size: $base-font-size;
+    font-size: $small-font-size;
     colgroup {
         col {
             &.file-type {
@@ -71,7 +71,7 @@ table.document-table {
 @media screen and (max-width: 992px) {
     table.document-table {
         min-width: 390px;
-        font-size: $base-font-size;
+        font-size: $small-font-size;
         thead {
             border: transparent;
             clip: rect(0 0 0 0);
@@ -84,8 +84,6 @@ table.document-table {
         }
         tbody {
             tr {
-                border-bottom: $document-table-border;
-                display: block;
                 td {
                     display: block;
                     text-align: right;
@@ -101,6 +99,7 @@ table.document-table {
                         padding-left: 0.5em;
                     }
                     &.file-type {
+                        margin-top: 1.5em;
                         background-color: $light-color;
                     }
                     // from column 1st to 4th
@@ -108,7 +107,7 @@ table.document-table {
                         border: $document-table-border;
                     }
                     &:last-child {
-                        border-bottom: 0;
+                        display: none;
                     }
                 }
             }

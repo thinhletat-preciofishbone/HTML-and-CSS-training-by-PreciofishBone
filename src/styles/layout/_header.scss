@@ -1,9 +1,11 @@
 @import '../base/color';
+@import '../utilities/fonts';
+$header-font-size: 0.85em;
 // Header styles
 nav#navigation-menu {
+    font-size: $header-font-size;
     ul.navbar-nav {
         li.nav-item {
-            font-size: 0.9em;
             a.nav-link {
                 color: black;
                 i.nav-link-icon {
@@ -13,6 +15,7 @@ nav#navigation-menu {
             div.dropdown-menu {
                 padding-top: 0.25em;
                 padding-bottom: 0.25em;
+                font-size: $small-font-size;
             }
         }
     }
