@@ -6347,11 +6347,15 @@ nav#navigation-menu ul.navbar-nav li.nav-item div.dropdown-menu {
   font-size: 0.75em;
 }
 
+body {
+  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
+
 table.document-table {
   font-size: 0.75em;
 }
 table.document-table colgroup col.file-type {
-  width: 7%;
+  width: 5%;
 }
 table.document-table colgroup col.file-name {
   width: 35%;
@@ -6363,7 +6367,7 @@ table.document-table colgroup col.modified-by {
   width: 175px;
 }
 table.document-table colgroup col.add-new-column {
-  width: calc(100% - 7% - 35%)-350px;
+  width: calc(100% - 5% - 35%)-350px;
 }
 table.document-table th {
   border-top: transparent;
@@ -6373,13 +6377,18 @@ table.document-table th:hover {
   background-color: #f8f9fa;
 }
 table.document-table th.file-type {
-  text-align: right;
+  text-align: center;
 }
 table.document-table tbody tr {
   padding-top: 30px;
 }
 table.document-table tbody tr:hover {
   background-color: #f8f9fa;
+}
+@media screen and (max-width: 992px) {
+  table.document-table tbody tr:hover {
+    background-color: white;
+  }
 }
 table.document-table tbody tr:last-child {
   border-bottom: 1px solid #dee2e6;
@@ -6388,7 +6397,7 @@ table.document-table tbody tr td {
   position: relative;
 }
 table.document-table tbody tr td.file-type {
-  text-align: right;
+  text-align: center;
   vertical-align: middle;
 }
 table.document-table tbody tr td.file-type i.bi-file-earmark-spreadsheet-fill {
@@ -6431,6 +6440,9 @@ table.document-table tbody tr td:nth-child(n+3) {
     text-align: left;
     padding-left: 0.5em;
   }
+  table.document-table tbody tr td:hover {
+    background-color: #f8f9fa;
+  }
   table.document-table tbody tr td.file-type {
     margin-top: 1.5em;
     background-color: #f8f9fa;
@@ -6448,8 +6460,8 @@ table.document-table tbody tr td:nth-child(n+3) {
 
 .new-file-icon {
   position: absolute;
-  left: 0.4em;
-  top: 1em;
+  left: 0.3em;
+  top: 0.9em;
   font-size: 11px;
 }
 
