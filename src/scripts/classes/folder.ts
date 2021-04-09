@@ -1,7 +1,17 @@
 import Item from './item';
 // The 'Leaf' class
 export default class Folder extends Item {
-  subItems: object = {};
+  fileItems: any = [];
+
+  folderItems: any = [];
+
+  addFile(_file: Item) {
+    this.fileItems.push(_file);
+  }
+
+  addFolder(_folder: Folder) {
+    this.folderItems.push(_folder);
+  }
 }
 
 /*

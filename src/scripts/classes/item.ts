@@ -1,16 +1,22 @@
 // The 'Component' class (root) (abstract class)
 export default class Item {
-  itemType: string;
+  id: string;
 
-  itemName: string;
+  name: string;
+
+  createdTime: Date;
+
+  createdBy: string;
 
   modifiedTime: Date;
 
   modifiedBy: string;
 
-  constructor(_fileType: string, _fileName: string) {
-    this.itemType = _fileType;
-    this.itemName = _fileName;
+  constructor(_id: string, _name: string) {
+    this.id = _id;
+    this.name = _name;
+    this.createdTime = new Date();
+    this.createdBy = 'Administrator';
     this.modifiedTime = new Date();
     this.modifiedBy = 'Administrator';
   }

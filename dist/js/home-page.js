@@ -124,17 +124,9 @@ __webpack_require__.r(__webpack_exports__);
  // The 'Leaf' class
 
 class File extends _item__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor(_fileType, _fileName, _fileExtension) {
-    super(_fileType, _fileName);
-    this.fileExtension = _fileExtension;
-  }
-
-  test() {
-    console.log(this.itemType);
-    console.log(this.itemName);
-    console.log(this.fileExtension);
-    console.log(this.modifiedTime);
-    console.log(this.modifiedBy);
+  constructor(_id, _name, _extension) {
+    super(_id, _name);
+    this.extension = _extension;
   }
 
 }
@@ -157,7 +149,16 @@ __webpack_require__.r(__webpack_exports__);
 class Folder extends _item__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor() {
     super(...arguments);
-    this.subItems = {};
+    this.fileItems = [];
+    this.folderItems = [];
+  }
+
+  addFile(_file) {
+    this.fileItems.push(_file);
+  }
+
+  addFolder(_folder) {
+    this.folderItems.push(_folder);
   }
 
 }
@@ -213,9 +214,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Item; });
 // The 'Component' class (root) (abstract class)
 class Item {
-  constructor(_fileType, _fileName) {
-    this.itemType = _fileType;
-    this.itemName = _fileName;
+  constructor(_id, _name) {
+    this.id = _id;
+    this.name = _name;
+    this.createdTime = new Date();
+    this.createdBy = 'Administrator';
     this.modifiedTime = new Date();
     this.modifiedBy = 'Administrator';
   }
@@ -333,14 +336,26 @@ const renderGrid = () => {// TODO: implement code to Render grid
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _classes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/_index */ "./src/scripts/classes/_index.ts");
-/* harmony import */ var _enums_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../enums/index */ "./src/scripts/enums/index.ts");
-
 
 
 function activateNavigationMenuOperations() {
   $('.create-new-folder-option').on('click', () => {
-    const file = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].File(_enums_index__WEBPACK_IMPORTED_MODULE_1__["default"].Item.fileType.File, 'd4ng3r0Us v1rUs', 'exe');
-    file.test();
+    /*
+    const file = new classes.File(
+      enums.Item.fileType.File,
+      'd4ng3r0Us v1rUs',
+      'exe',
+    );
+    */
+    const rootFolder = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].Folder('fd-0', 'root');
+    const file1 = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].File('f-0', 'Morris Worm', 'exe');
+    const file2 = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].File('f-1', 'Nimda', 'exe');
+    const folder1 = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].Folder('fd-1', 'CAS');
+    rootFolder.addFile(file1);
+    rootFolder.addFile(file2);
+    rootFolder.addFolder(folder1);
+    console.log(rootFolder.fileItems);
+    console.log(rootFolder.folderItems);
   });
   $('.create-new-file-option').on('click', () => {// console.log('create a new file option clicked');
   });
@@ -352,46 +367,6 @@ const header = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (header);
-
-/***/ }),
-
-/***/ "./src/scripts/enums/index.ts":
-/*!************************************!*\
-  !*** ./src/scripts/enums/index.ts ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./src/scripts/enums/item.ts");
-
-const classes = {
-  Item: _item__WEBPACK_IMPORTED_MODULE_0__["default"]
-};
-/* harmony default export */ __webpack_exports__["default"] = (classes);
-
-/***/ }),
-
-/***/ "./src/scripts/enums/item.ts":
-/*!***********************************!*\
-  !*** ./src/scripts/enums/item.ts ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var fileType;
-
-(function (fileType) {
-  fileType["Folder"] = "folder";
-  fileType["File"] = "file";
-})(fileType || (fileType = {}));
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  fileType
-});
 
 /***/ }),
 
