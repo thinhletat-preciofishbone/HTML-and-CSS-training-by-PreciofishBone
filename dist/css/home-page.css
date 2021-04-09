@@ -6448,7 +6448,7 @@ table.document-table tbody tr td:nth-child(n+3) {
 
 .new-file-icon {
   position: absolute;
-  left: 0.5em;
+  left: 0.4em;
   top: 1em;
   font-size: 11px;
 }
@@ -6456,8 +6456,8 @@ table.document-table tbody tr td:nth-child(n+3) {
 @media screen and (max-width: 992px) {
   .new-file-icon {
     position: absolute;
-    left: 138px;
-    top: 1em;
+    left: 136px;
+    top: 0.8em;
     font-size: 11px;
   }
 }
