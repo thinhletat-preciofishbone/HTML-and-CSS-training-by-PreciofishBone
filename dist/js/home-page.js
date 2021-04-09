@@ -86,6 +86,227 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/scripts/classes/_index.ts":
+/*!***************************************!*\
+  !*** ./src/scripts/classes/_index.ts ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./src/scripts/classes/item.ts");
+/* harmony import */ var _file__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./file */ "./src/scripts/classes/file.ts");
+/* harmony import */ var _folder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./folder */ "./src/scripts/classes/folder.ts");
+
+
+
+const classes = {
+  Item: _item__WEBPACK_IMPORTED_MODULE_0__["default"],
+  File: _file__WEBPACK_IMPORTED_MODULE_1__["default"],
+  Folder: _folder__WEBPACK_IMPORTED_MODULE_2__["default"]
+};
+/* harmony default export */ __webpack_exports__["default"] = (classes);
+
+/***/ }),
+
+/***/ "./src/scripts/classes/file.ts":
+/*!*************************************!*\
+  !*** ./src/scripts/classes/file.ts ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return File; });
+/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./src/scripts/classes/item.ts");
+ // The 'Leaf' class
+
+class File extends _item__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor(_fileType, _fileName, _fileExtension) {
+    super(_fileType, _fileName);
+    this.fileExtension = _fileExtension;
+  }
+
+  test() {
+    console.log(this.itemType);
+    console.log(this.itemName);
+    console.log(this.fileExtension);
+    console.log(this.modifiedTime);
+    console.log(this.modifiedBy);
+  }
+
+}
+
+/***/ }),
+
+/***/ "./src/scripts/classes/folder.ts":
+/*!***************************************!*\
+  !*** ./src/scripts/classes/folder.ts ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Folder; });
+/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./src/scripts/classes/item.ts");
+ // The 'Leaf' class
+
+class Folder extends _item__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor() {
+    super(...arguments);
+    this.subItems = {};
+  }
+
+}
+/*
+  class CompositeElement : DrawingElement
+
+  {
+    private List<DrawingElement> elements =
+      new List<DrawingElement>();
+ 
+    // Constructor
+
+    public CompositeElement(string name)
+      : base(name)
+    {
+    }
+ 
+    public override void Add(DrawingElement d)
+    {
+      elements.Add(d);
+    }
+ 
+    public override void Remove(DrawingElement d)
+    {
+      elements.Remove(d);
+    }
+ 
+    public override void Display(int indent)
+    {
+      Console.WriteLine(new String('-', indent) +
+        "+ " + _name);
+ 
+      // Display each child element on this node
+
+      foreach (DrawingElement d in elements)
+      {
+        d.Display(indent + 2);
+      }
+    }
+    */
+
+/***/ }),
+
+/***/ "./src/scripts/classes/item.ts":
+/*!*************************************!*\
+  !*** ./src/scripts/classes/item.ts ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Item; });
+// The 'Component' class (root) (abstract class)
+class Item {
+  constructor(_fileType, _fileName) {
+    this.itemType = _fileType;
+    this.itemName = _fileName;
+    this.modifiedTime = new Date();
+    this.modifiedBy = 'Administrator';
+  }
+
+}
+/*
+
+public abstract class GiftBase
+{
+    protected string name;
+    protected int price;
+    public GiftBase(string name, int price)
+    {
+        this.name = name;
+        this.price = price;
+   }
+    public abstract int CalculateTotalPrice();
+}
+
+public interface IGiftOperations
+{
+    void Add(GiftBase gift);
+    void Remove(GiftBase gift);
+}
+
+public class CompositeGift : GiftBase, IGiftOperations
+{
+    private List<GiftBase> _gifts;
+    public CompositeGift(string name, int price)
+        :base(name, price)
+    {
+        _gifts = new List<GiftBase>();
+    }
+    public void Add(GiftBase gift)
+    {
+        _gifts.Add(gift);
+    }
+    public void Remove(GiftBase gift)
+    {
+        _gifts.Remove(gift);
+    }
+    public override int CalculateTotalPrice()
+    {
+        int total = 0;
+        Console.WriteLine($"{name} contains the following products with prices:");
+        foreach (var gift in _gifts)
+        {
+            total += gift.CalculateTotalPrice();
+        }
+        return total;
+    }
+}
+
+public class SingleGift : GiftBase
+{
+    public SingleGift(string name, int price)
+        :base(name, price)
+    {
+    }
+    public override int CalculateTotalPrice()
+    {
+        Console.WriteLine($"{name} with the price {price}");
+        return price;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        var phone = new SingleGift("Phone", 256);
+        phone.CalculateTotalPrice();
+        Console.WriteLine();
+        //composite gift
+        var rootBox = new CompositeGift("RootBox", 0);
+        var truckToy = new SingleGift("TruckToy", 289);
+        var plainToy = new SingleGift("PlainToy", 587);
+        rootBox.Add(truckToy);
+        rootBox.Add(plainToy);
+        var childBox = new CompositeGift("ChildBox", 0);
+        var soldierToy = new SingleGift("SoldierToy", 200);
+        childBox.Add(soldierToy);
+        rootBox.Add(childBox);
+        Console.WriteLine($"Total price of this composite present is: {rootBox.CalculateTotalPrice()}");
+    }
+}
+
+*/
+
+/***/ }),
+
 /***/ "./src/scripts/components/_grid.ts":
 /*!*****************************************!*\
   !*** ./src/scripts/components/_grid.ts ***!
@@ -111,12 +332,17 @@ const renderGrid = () => {// TODO: implement code to Render grid
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _classes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/_index */ "./src/scripts/classes/_index.ts");
+/* harmony import */ var _enums_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../enums/index */ "./src/scripts/enums/index.ts");
+
+
+
 function activateNavigationMenuOperations() {
   $('.create-new-folder-option').on('click', () => {
-    alert('hehehe');
+    const file = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].File(_enums_index__WEBPACK_IMPORTED_MODULE_1__["default"].Item.fileType.File, 'd4ng3r0Us v1rUs', 'exe');
+    file.test();
   });
-  $('.create-new-file-option').on('click', () => {
-    alert('hehehe');
+  $('.create-new-file-option').on('click', () => {// console.log('create a new file option clicked');
   });
 }
 
@@ -126,6 +352,46 @@ const header = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (header);
+
+/***/ }),
+
+/***/ "./src/scripts/enums/index.ts":
+/*!************************************!*\
+  !*** ./src/scripts/enums/index.ts ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./src/scripts/enums/item.ts");
+
+const classes = {
+  Item: _item__WEBPACK_IMPORTED_MODULE_0__["default"]
+};
+/* harmony default export */ __webpack_exports__["default"] = (classes);
+
+/***/ }),
+
+/***/ "./src/scripts/enums/item.ts":
+/*!***********************************!*\
+  !*** ./src/scripts/enums/item.ts ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var fileType;
+
+(function (fileType) {
+  fileType["Folder"] = "folder";
+  fileType["File"] = "file";
+})(fileType || (fileType = {}));
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  fileType
+});
 
 /***/ }),
 
