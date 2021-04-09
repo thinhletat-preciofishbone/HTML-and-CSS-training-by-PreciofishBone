@@ -6332,9 +6332,6 @@ a.text-dark:hover, a.text-dark:focus {
   visibility: hidden !important;
 }
 
-nav#navigation-menu {
-  font-size: 0.85em;
-}
 nav#navigation-menu ul.navbar-nav li.nav-item a.nav-link {
   color: black;
 }
@@ -6344,15 +6341,16 @@ nav#navigation-menu ul.navbar-nav li.nav-item a.nav-link i.nav-link-icon {
 nav#navigation-menu ul.navbar-nav li.nav-item div.dropdown-menu {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
-  font-size: 0.75em;
+  font-size: 0.9em;
 }
 
 body {
   font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
 }
 
 table.document-table {
-  font-size: 0.75em;
+  font-size: 16px;
 }
 table.document-table colgroup col.file-type {
   width: 5%;
@@ -6377,7 +6375,7 @@ table.document-table th:hover {
   background-color: #f8f9fa;
 }
 table.document-table th.file-type {
-  text-align: center;
+  text-align: right;
 }
 table.document-table tbody tr {
   padding-top: 30px;
@@ -6397,11 +6395,8 @@ table.document-table tbody tr td {
   position: relative;
 }
 table.document-table tbody tr td.file-type {
-  text-align: center;
+  text-align: right;
   vertical-align: middle;
-}
-table.document-table tbody tr td.file-type i.bi-file-earmark-spreadsheet-fill {
-  color: #217346;
 }
 table.document-table tbody tr td.file-name {
   cursor: pointer;
@@ -6413,7 +6408,7 @@ table.document-table tbody tr td:nth-child(n+3) {
 @media screen and (max-width: 992px) {
   table.document-table {
     min-width: 390px;
-    font-size: 0.75em;
+    font-size: 16px;
   }
   table.document-table thead {
     border: transparent;
@@ -6456,6 +6451,10 @@ table.document-table tbody tr td:nth-child(n+3) {
 }
 .plus-icon {
   font-size: 19px;
+}
+
+.excel-icon {
+  color: #217346;
 }
 
 .new-file-icon {

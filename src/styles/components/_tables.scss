@@ -8,7 +8,7 @@
     $document-table-add-new-col-column-width: calc(100% - #{$document-table-file-type-column-width} - #{$document-table-file-name-column-width}) - $document-table-modified-time-column-width*2;
     $document-table-border: 1px solid $border-light-color;
     table.document-table {
-        font-size: $small-font-size;
+        font-size: $base-font-size;
         colgroup {
             col {
                 &.file-type {
@@ -35,7 +35,7 @@
                 background-color: $light-color;
             }
             &.file-type {
-                text-align: center;
+                text-align: right;
             }
         }
         tbody {
@@ -53,11 +53,8 @@
                 td {
                     position: relative;
                     &.file-type {
-                        text-align: center;
+                        text-align: right;
                         vertical-align: middle;
-                        i.bi-file-earmark-spreadsheet-fill {
-                            color: $excel-background-color;
-                        }
                     }
                     &.file-name {
                         cursor: pointer;
@@ -74,7 +71,7 @@
     @media screen and (max-width: 992px) {
         table.document-table {
             min-width: 390px;
-            font-size: $small-font-size;
+            font-size: $base-font-size;
             thead {
                 border: transparent;
                 clip: rect(0 0 0 0);
