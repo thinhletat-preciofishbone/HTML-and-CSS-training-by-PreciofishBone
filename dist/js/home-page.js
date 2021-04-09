@@ -102,6 +102,33 @@ const renderGrid = () => {// TODO: implement code to Render grid
 
 /***/ }),
 
+/***/ "./src/scripts/components/_header.ts":
+/*!*******************************************!*\
+  !*** ./src/scripts/components/_header.ts ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function activateNavigationMenuOperations() {
+  $('.create-new-folder-option').on('click', () => {
+    alert('hehehe');
+  });
+  $('.create-new-file-option').on('click', () => {
+    alert('hehehe');
+  });
+}
+
+const header = {
+  activateOperations: () => {
+    activateNavigationMenuOperations();
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (header);
+
+/***/ }),
+
 /***/ "./src/scripts/pages/home-page.ts":
 /*!****************************************!*\
   !*** ./src/scripts/pages/home-page.ts ***!
@@ -113,10 +140,13 @@ const renderGrid = () => {// TODO: implement code to Render grid
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/_helper */ "./src/scripts/utilities/_helper.ts");
 /* harmony import */ var _components_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/_grid */ "./src/scripts/components/_grid.ts");
+/* harmony import */ var _components_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/_header */ "./src/scripts/components/_header.ts");
+
 
 
 Object(_utilities_helper__WEBPACK_IMPORTED_MODULE_0__["default"])(() => {
   Object(_components_grid__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  _components_header__WEBPACK_IMPORTED_MODULE_2__["default"].activateOperations();
 });
 
 /***/ }),
