@@ -6339,8 +6339,8 @@ nav#navigation-menu ul.navbar-nav li.nav-item a.nav-link i.nav-link-icon {
   color: #b32179;
 }
 nav#navigation-menu ul.navbar-nav li.nav-item div.dropdown-menu {
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
+  padding-top: 0.35em;
+  padding-bottom: 0.35em;
   font-size: 1em;
 }
 
@@ -6456,8 +6456,20 @@ table.document-table tbody tr td:nth-child(n+3) {
   font-size: 19px;
 }
 
+.word-icon {
+  color: #2b579a;
+}
+
 .excel-icon {
   color: #217346;
+}
+
+.power-point-icon {
+  color: #b7472a;
+}
+
+.one-note-icon {
+  color: #80397b;
 }
 
 .new-file-icon {
