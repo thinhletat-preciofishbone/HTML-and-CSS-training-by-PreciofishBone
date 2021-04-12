@@ -86,230 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/scripts/classes/_index.ts":
-/*!***************************************!*\
-  !*** ./src/scripts/classes/_index.ts ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./src/scripts/classes/item.ts");
-/* harmony import */ var _file__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./file */ "./src/scripts/classes/file.ts");
-/* harmony import */ var _folder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./folder */ "./src/scripts/classes/folder.ts");
-
-
-
-const classes = {
-  Item: _item__WEBPACK_IMPORTED_MODULE_0__["default"],
-  File: _file__WEBPACK_IMPORTED_MODULE_1__["default"],
-  Folder: _folder__WEBPACK_IMPORTED_MODULE_2__["default"]
-};
-/* harmony default export */ __webpack_exports__["default"] = (classes);
-
-/***/ }),
-
-/***/ "./src/scripts/classes/file.ts":
-/*!*************************************!*\
-  !*** ./src/scripts/classes/file.ts ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return File; });
-/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./src/scripts/classes/item.ts");
- // The 'Leaf' class
-
-class File extends _item__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor(_id, _name, _extension) {
-    super(_id, _name);
-    this.extension = _extension;
-  }
-
-}
-
-/***/ }),
-
-/***/ "./src/scripts/classes/folder.ts":
-/*!***************************************!*\
-  !*** ./src/scripts/classes/folder.ts ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Folder; });
-/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./src/scripts/classes/item.ts");
- // The 'Leaf' class
-
-class Folder extends _item__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor() {
-    super(...arguments);
-    this.fileItems = [];
-    this.folderItems = [];
-  }
-
-  addFile(_file) {
-    this.fileItems.push(_file);
-  }
-
-  addFolder(_folder) {
-    this.folderItems.push(_folder);
-  }
-
-}
-/*
-  class CompositeElement : DrawingElement
-
-  {
-    private List<DrawingElement> elements =
-      new List<DrawingElement>();
- 
-    // Constructor
-
-    public CompositeElement(string name)
-      : base(name)
-    {
-    }
- 
-    public override void Add(DrawingElement d)
-    {
-      elements.Add(d);
-    }
- 
-    public override void Remove(DrawingElement d)
-    {
-      elements.Remove(d);
-    }
- 
-    public override void Display(int indent)
-    {
-      Console.WriteLine(new String('-', indent) +
-        "+ " + _name);
- 
-      // Display each child element on this node
-
-      foreach (DrawingElement d in elements)
-      {
-        d.Display(indent + 2);
-      }
-    }
-    */
-
-/***/ }),
-
-/***/ "./src/scripts/classes/item.ts":
-/*!*************************************!*\
-  !*** ./src/scripts/classes/item.ts ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Item; });
-// The 'Component' class (root) (abstract class)
-class Item {
-  constructor(_id, _name) {
-    this.id = _id;
-    this.name = _name;
-    this.createdTime = new Date();
-    this.createdBy = 'Administrator';
-    this.modifiedTime = new Date();
-    this.modifiedBy = 'Administrator';
-  }
-
-}
-/*
-
-public abstract class GiftBase
-{
-    protected string name;
-    protected int price;
-    public GiftBase(string name, int price)
-    {
-        this.name = name;
-        this.price = price;
-   }
-    public abstract int CalculateTotalPrice();
-}
-
-public interface IGiftOperations
-{
-    void Add(GiftBase gift);
-    void Remove(GiftBase gift);
-}
-
-public class CompositeGift : GiftBase, IGiftOperations
-{
-    private List<GiftBase> _gifts;
-    public CompositeGift(string name, int price)
-        :base(name, price)
-    {
-        _gifts = new List<GiftBase>();
-    }
-    public void Add(GiftBase gift)
-    {
-        _gifts.Add(gift);
-    }
-    public void Remove(GiftBase gift)
-    {
-        _gifts.Remove(gift);
-    }
-    public override int CalculateTotalPrice()
-    {
-        int total = 0;
-        Console.WriteLine($"{name} contains the following products with prices:");
-        foreach (var gift in _gifts)
-        {
-            total += gift.CalculateTotalPrice();
-        }
-        return total;
-    }
-}
-
-public class SingleGift : GiftBase
-{
-    public SingleGift(string name, int price)
-        :base(name, price)
-    {
-    }
-    public override int CalculateTotalPrice()
-    {
-        Console.WriteLine($"{name} with the price {price}");
-        return price;
-    }
-}
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        var phone = new SingleGift("Phone", 256);
-        phone.CalculateTotalPrice();
-        Console.WriteLine();
-        //composite gift
-        var rootBox = new CompositeGift("RootBox", 0);
-        var truckToy = new SingleGift("TruckToy", 289);
-        var plainToy = new SingleGift("PlainToy", 587);
-        rootBox.Add(truckToy);
-        rootBox.Add(plainToy);
-        var childBox = new CompositeGift("ChildBox", 0);
-        var soldierToy = new SingleGift("SoldierToy", 200);
-        childBox.Add(soldierToy);
-        rootBox.Add(childBox);
-        Console.WriteLine($"Total price of this composite present is: {rootBox.CalculateTotalPrice()}");
-    }
-}
-
-*/
-
-/***/ }),
-
 /***/ "./src/scripts/components/_grid.ts":
 /*!*****************************************!*\
   !*** ./src/scripts/components/_grid.ts ***!
@@ -335,29 +111,10 @@ const renderGrid = () => {// TODO: implement code to Render grid
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _classes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/_index */ "./src/scripts/classes/_index.ts");
-
-
 function activateNavigationMenuOperations() {
-  $('.create-new-folder-option').on('click', () => {
-    /*
-    const file = new classes.File(
-      enums.Item.fileType.File,
-      'd4ng3r0Us v1rUs',
-      'exe',
-    );
-    */
-    const rootFolder = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].Folder('fd-0', 'root');
-    const file1 = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].File('f-0', 'Morris Worm', 'exe');
-    const file2 = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].File('f-1', 'Nimda', 'exe');
-    const folder1 = new _classes_index__WEBPACK_IMPORTED_MODULE_0__["default"].Folder('fd-1', 'CAS');
-    rootFolder.addFile(file1);
-    rootFolder.addFile(file2);
-    rootFolder.addFolder(folder1);
-    console.log(rootFolder.fileItems);
-    console.log(rootFolder.folderItems);
+  $('.create-new-folder-option').on('click', () => {// TODO
   });
-  $('.create-new-file-option').on('click', () => {// console.log('create a new file option clicked');
+  $('.create-new-file-option').on('click', () => {// TODO
   });
 }
 
@@ -367,6 +124,27 @@ const header = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (header);
+
+/***/ }),
+
+/***/ "./src/scripts/constant/index.ts":
+/*!***************************************!*\
+  !*** ./src/scripts/constant/index.ts ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const itemIconClass = {
+  folder: 'bi bi-folder',
+  text: 'bi bi-journal-text',
+  word: 'bi bi-file-earmark-word-fill word-icon',
+  excel: 'bi bi-file-earmark-spreadsheet-fill excel-icon',
+  powerPoint: 'bi bi-file-earmark-ppt-fill power-point-icon',
+  oneNote: 'bi bi-journal-bookmark-fill one-note-icon'
+};
+/* harmony default export */ __webpack_exports__["default"] = (itemIconClass);
 
 /***/ }),
 
@@ -382,13 +160,206 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/_helper */ "./src/scripts/utilities/_helper.ts");
 /* harmony import */ var _components_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/_grid */ "./src/scripts/components/_grid.ts");
 /* harmony import */ var _components_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/_header */ "./src/scripts/components/_header.ts");
+/* harmony import */ var _sample_data_sample_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../sample-data/sample-data */ "./src/scripts/sample-data/sample-data.ts");
+/* harmony import */ var _constant_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constant/index */ "./src/scripts/constant/index.ts");
 
 
+
+
+
+
+function createItemIcon(_item) {
+  const icon = document.createElement('i');
+
+  if (_item.extension !== undefined) {
+    switch (_item.extension) {
+      case 'txt':
+        icon.setAttribute('class', _constant_index__WEBPACK_IMPORTED_MODULE_4__["default"].text);
+        break;
+
+      case 'doc':
+      case 'docx':
+        icon.setAttribute('class', _constant_index__WEBPACK_IMPORTED_MODULE_4__["default"].word);
+        break;
+
+      case 'xml':
+      case 'csv':
+      case 'xlsx':
+        icon.setAttribute('class', _constant_index__WEBPACK_IMPORTED_MODULE_4__["default"].excel);
+        break;
+
+      default:
+    }
+  } else {
+    icon.setAttribute('class', _constant_index__WEBPACK_IMPORTED_MODULE_4__["default"].folder);
+  }
+
+  return icon;
+}
+
+function createItemRecord(_item) {
+  const tbody = document.getElementsByClassName('document-table')[0].getElementsByTagName('tbody')[0];
+  const tr = document.createElement('tr'); // file type
+
+  let td = document.createElement('td');
+  td.setAttribute('class', 'file-type');
+  td.setAttribute('data-label', 'File Type');
+  const icon = createItemIcon(_item);
+  td.appendChild(icon);
+  tr.appendChild(td); // file name
+
+  td = document.createElement('td');
+  td.setAttribute('class', 'file-name');
+  td.setAttribute('data-label', 'Name');
+
+  if (_item.extension !== undefined) {
+    td.innerHTML = `${_item.name}.${_item.extension}`;
+  } else {
+    td.innerHTML = `${_item.name}`;
+  }
+
+  tr.appendChild(td); // modified time
+
+  td = document.createElement('td');
+  td.setAttribute('class', 'modified-time');
+  td.setAttribute('data-label', 'Modified');
+  td.innerHTML = `${_item.modifiedTime}`;
+  tr.appendChild(td); // modified by
+
+  td = document.createElement('td');
+  td.setAttribute('class', 'modified-by');
+  td.setAttribute('data-label', 'Modified By');
+  td.innerHTML = `${_item.modifiedBy}`;
+  tr.appendChild(td); // new column
+
+  td = document.createElement('td');
+  tr.appendChild(td);
+  tbody.appendChild(tr);
+}
+
+function displayItems(itemList) {
+  for (let itemIndex = 0; itemIndex < itemList.length; itemIndex += 1) {
+    createItemRecord(itemList[itemIndex]);
+  }
+}
+
+function renderDirectory(directory) {
+  // Find tbody element
+  if (directory === 'root') {
+    displayItems(_sample_data_sample_data__WEBPACK_IMPORTED_MODULE_3__["default"].folders);
+    /* Display folders */
+
+    /* Display files */
+
+    displayItems(_sample_data_sample_data__WEBPACK_IMPORTED_MODULE_3__["default"].files);
+  }
+}
 
 Object(_utilities_helper__WEBPACK_IMPORTED_MODULE_0__["default"])(() => {
   Object(_components_grid__WEBPACK_IMPORTED_MODULE_1__["default"])();
   _components_header__WEBPACK_IMPORTED_MODULE_2__["default"].activateOperations();
+  renderDirectory('root');
 });
+
+/***/ }),
+
+/***/ "./src/scripts/sample-data/sample-data.ts":
+/*!************************************************!*\
+  !*** ./src/scripts/sample-data/sample-data.ts ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/*
+  root/
+  ├─ assignment/
+  │  ├─ assignment 1.ts
+  │  ├─ assignment 2.ts
+  │  ├─ records/
+  │  │  ├─ record 1.mp4
+  │  │  ├─ record 2.mp4
+  ├─ readme.txt
+  ├─ note.txt
+*/
+const root = {
+  id: 'folder-root',
+  name: 'root',
+  createdTime: '2021/04/12 08:54:00',
+  createdBy: 'Administrator',
+  modifiedTime: '2021/04/12 08:54:00',
+  modifiedBy: 'Administrator',
+  folders: [{
+    id: 'folder-000002',
+    name: 'assignment',
+    createdTime: '2021/04/12 09:07:00',
+    createdBy: 'Thinh Le',
+    modifiedTime: '2021/04/12 09:07:00',
+    modifiedBy: 'Thinh Le',
+    folders: [{
+      id: 'folder-000003',
+      name: 'record',
+      createdTime: '2021/04/12 09:10:00',
+      createdBy: 'Thinh Le',
+      modifiedTime: '',
+      modifiedBy: '',
+      folders: [],
+      files: [{
+        id: 'file-000005',
+        name: 'record 1',
+        extension: 'ts',
+        createdTime: '2021/04/12 09:16:17',
+        createdBy: 'Thinh Le',
+        modifiedTime: '',
+        modifiedBy: ''
+      }, {
+        id: 'file-000006',
+        name: 'record 2',
+        extension: 'ts',
+        createdTime: '2021/04/12 09:16:24',
+        createdBy: 'Thinh Le',
+        modifiedTime: '',
+        modifiedBy: ''
+      }]
+    }],
+    files: [{
+      id: 'file-000003',
+      name: 'assignment 1',
+      extension: 'ts',
+      createdTime: '2021/04/12 09:14:10',
+      createdBy: 'Thinh Le',
+      modifiedTime: '',
+      modifiedBy: ''
+    }, {
+      id: 'file-000004',
+      name: 'assignment 2',
+      extension: 'ts',
+      createdTime: '2021/04/12 09:14:38',
+      createdBy: 'Thinh Le',
+      modifiedTime: '',
+      modifiedBy: ''
+    }]
+  }],
+  files: [{
+    id: 'file-000001',
+    name: 'readme',
+    extension: 'txt',
+    createdTime: '2021/04/12 08:56:00',
+    createdBy: 'Thinh Le',
+    modifiedTime: '2021/04/12 08:56:00',
+    modifiedBy: 'Thinh Le'
+  }, {
+    id: 'file-000002',
+    name: 'note',
+    extension: 'docx',
+    createdTime: '2021/04/12 08:59:00',
+    createdBy: 'Thinh Le',
+    modifiedTime: '2021/04/12 08:59:00',
+    modifiedBy: 'Thinh Le'
+  }]
+};
+/* harmony default export */ __webpack_exports__["default"] = (root);
 
 /***/ }),
 

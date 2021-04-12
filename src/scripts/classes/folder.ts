@@ -3,14 +3,14 @@ import Item from './item';
 export default class Folder extends Item {
   fileItems: any = [];
 
-  folderItems: any = [];
+  subFolderItems: any = [];
 
   addFile(_file: Item) {
     this.fileItems.push(_file);
   }
 
   addFolder(_folder: Folder) {
-    this.folderItems.push(_folder);
+    this.subFolderItems.push(_folder);
   }
 }
 
