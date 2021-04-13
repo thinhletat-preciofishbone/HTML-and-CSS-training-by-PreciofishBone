@@ -1,7 +1,7 @@
 // Table styles
 @import '../base/color';
 @import '../utilities/fonts';
-$document-table-file-type-column-width: 5%;
+$document-table-file-type-column-width: 7%;
 $document-table-file-name-column-width: 35%;
 $document-table-modified-time-column-width: 175px;
 $document-table-modified-by-column-width: $document-table-modified-time-column-width;
@@ -17,10 +17,10 @@ table {
 table.document-table {
     colgroup {
         col {
-            &.file-type {
+            &.item-type {
                 width: $document-table-file-type-column-width;
             }
-            &.file-name {
+            &.item-name {
                 width: $document-table-file-name-column-width;
             }
             &.modified-time {
@@ -40,7 +40,7 @@ table.document-table {
         &:hover {
             background-color: $light-color;
         }
-        &.file-type {
+        &.item-type {
             text-align: right;
         }
     }
@@ -58,11 +58,11 @@ table.document-table {
             }
             td {
                 position: relative;
-                &.file-type {
+                &.item-type {
                     text-align: right;
                     vertical-align: middle;
                 }
-                &.file-name {
+                &.item-name {
                     cursor: pointer;
                 }
                 // from column 3th and after
@@ -105,7 +105,7 @@ table.document-table {
                 &:hover {
                     background-color: $light-color;
                 }
-                &.file-type {
+                &.item-type {
                     margin-top: 1.5em;
                     background-color: $light-color;
                 }

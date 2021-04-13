@@ -3,6 +3,9 @@
 <head>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="dist/css/home-page.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title>Assignment</title>
 </head>
 
 <body>
@@ -13,76 +16,116 @@
     <div class="navbar-collapse collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown mr-1 ml-2 ml-lg-0">
-          <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+          <button class="nav-link btn" type="button" data-toggle="dropdown">
             <i class="bi bi-plus nav-link-icon plus-icon mr-2 mr-lg-1"></i>New
             <i class="bi bi-chevron-down"></i>
-          </a>
+          </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item create-new-folder-option" href="#"><i class="bi bi-folder-fill mr-2"></i>Folder</a>
-            <a class="dropdown-item create-new-file-option border-bottom" href="#"><i class="bi bi-file mr-2"></i>File</a>
-            <a class="dropdown-item create-new-word-document-option" href="#"><i class="bi bi-file-earmark-word-fill word-icon mr-2"></i>Word document</a>
-            <a class="dropdown-item create-new-excel-document-option" href="#"><i class="bi bi-file-earmark-spreadsheet-fill excel-icon mr-2"></i>Excel workbook</a>
-            <a class="dropdown-item create-new-power-point-document-option" href="#"><i class="bi bi-file-earmark-ppt-fill power-point-icon mr-2"></i>powerPoint presentation</a>
-            <a class="dropdown-item create-one-note-document-option" href="#"><i class="bi bi-journal-bookmark-fill one-note-icon mr-2"></i>OneNote notebook</a>
-            <a class="dropdown-item create-excel-form-document-option" href="#"><i class="bi bi-file-earmark-richtext excel-icon mr-2"></i>Forms for Excel</a>
+            <button class="dropdown-item create-new-folder-option btn" type="button" data-toggle="modal"
+              data-target="#newItemModal">
+              <i class="bi bi-folder-fill mr-2"></i>Folder
+            </button>
+            <button class="dropdown-item create-new-file-option border-bottom btn" type="button" data-toggle="modal"
+              data-target="#newItemModal">
+              <i class="bi bi-file mr-2"></i>File</button>
+            <button class="dropdown-item create-new-word-document-option btn" type="button"><i
+                class="bi bi-file-earmark-word-fill word-icon mr-2"></i>Word document</button>
+            <button class="dropdown-item create-new-excel-document-option btn" type="button"><i
+                class="bi bi-file-earmark-spreadsheet-fill excel-icon mr-2"></i>Excel workbook</button>
+            <button class="dropdown-item create-new-power-point-document-option btn" type="button"><i
+                class="bi bi-file-earmark-ppt-fill power-point-icon mr-2"></i>powerPoint presentation</button>
+            <button class="dropdown-item create-one-note-document-option btn" type="button"><i
+                class="bi bi-journal-bookmark-fill one-note-icon mr-2"></i>OneNote notebook</button>
+            <button class="dropdown-item create-excel-form-document-option btn" type="button"><i
+                class="bi bi-file-earmark-richtext excel-icon mr-2"></i>Forms for Excel</button>
           </div>
         </li>
         <li class="nav-item dropdown mr-1 ml-2 ml-lg-0">
-          <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+          <button class="nav-link btn" type="button" data-toggle="dropdown">
             <i class="bi bi-upload nav-link-icon mr-2"></i>Upload
             <i class="bi bi-chevron-down"></i>
-          </a>
+          </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">From your computer</a>
+            <button class="dropdown-item btn" type="button">From your computer</button>
           </div>
         </li>
         <li class="nav-item mr-1 ml-2 ml-lg-0">
-          <a class="nav-link" href="#">
+          <button class="nav-link btn" type="button">
             <i class="bi bi-arrow-repeat nav-link-icon mr-2"></i>Sync
-          </a>
+          </button>
         </li>
         <li class="nav-item mr-1 ml-2 ml-lg-0">
-          <a class="nav-link" href="#">
+          <button class="nav-link btn" type="button">
             <img class="mr-2" src="https://img.icons8.com/color/48/000000/ms-excel.png" width="18" />Export to Excel
-          </a>
+          </button>
         </li>
-        <li class="nav-item dropdown mr-1 ml-2 ml-lg-0">
-          <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+        <li class="nav-item dropdown ml-2 ml-lg-0">
+          <button class="nav-link btn" type="button" role="button" data-toggle="dropdown">
             <i class="bi bi-diagram-3-fill nav-link-icon mr-2"></i>Flow
             <i class="bi bi-chevron-down"></i>
-          </a>
+          </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Main flow</a>
+            <button class="dropdown-item btn" type="button">Main flow</button>
           </div>
         </li>
         <li class="nav-item dropdown ml-2 ml-lg-0">
-          <a class="nav-link mt-1 pl-0" href="#" role="button" data-toggle="dropdown">
+          <button class="nav-link btn mt-2" type="button" data-toggle="dropdown">
             <i class="bi bi-three-dots"></i>
-          </a>
+          </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">New feature</a>
+            <button class="dropdown-item btn" type="button">New feature</button>
           </div>
         </li>
       </ul>
     </div>
   </nav>
-  <div class="container px-0">
 
-    <h1 class="h3 font-weight-light mb-0 mb-lg-3">Documents</h1>
+  <!-- Modal -->
+  <div class="modal fade" id="newItemModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="new-item-modal-title"></h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="new-item-name" id="new-item-name-label">Item name</label>
+            <input type="text" class="form-control" id="new-item-name" name="new-item-name">
+            <span id="item-type" data-item-type=""></span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary save-new-item" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container px-0">
+    <div>
+      <h1 class="h3 font-weight-light mb-0 mb-lg-3 d-inline">Documents</h1>
+      <button type="button" class="btn button-back m-0 p-0 ml-3 mb-2"><i
+          class="bi bi-arrow-left-circle mr-2"></i>Back</button>
+    </div>
 
     <div class="table-responsive">
       <table class="table document-table">
         <colgroup>
-          <col class="file-type" span="1">
-          <col class="file-name" span="1">
+          <col class="item-type" span="1">
+          <col class="item-name" span="1">
           <col class="modified-time" span="1">
           <col class="modified-by" span="1">
           <col class="add-new-column" span="1">
         </colgroup>
         <thead>
           <tr>
-            <th class="file-type" scope="col"><i class="bi bi-file-earmark"></i></th>
-            <th class="file-name" scope="col">Name<i class="bi bi-chevron-down ml-2"></i></th>
+            <th class="item-type" scope="col"><i class="bi bi-file-earmark"></i></th>
+            <th class="item-name" scope="col">Name<i class="bi bi-chevron-down ml-2"></i></th>
             <th class="modified-time" scope="col">Modified<i class="bi bi-chevron-down ml-2"></i></th>
             <th class="modified-by" scope="col">Modified By<i class="bi bi-chevron-down ml-2"></i></th>
             <th class="add-new-column" scope="col"><i class="bi bi-plus plus-icon mr-1"></i>Add column</th>
@@ -93,10 +136,15 @@
       </table>
     </div>
   </div>
-
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
   <script src="./dist/js/home-page.js"></script>
 </body>
 

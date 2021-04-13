@@ -4,20 +4,20 @@ export default class Item {
 
   name: string;
 
-  createdTime: Date;
+  createdTime: string;
 
   createdBy: string;
 
-  modifiedTime: Date;
+  modifiedTime: string;
 
   modifiedBy: string;
 
   constructor(_id: string, _name: string) {
     this.id = _id;
     this.name = _name;
-    this.createdTime = new Date();
+    this.createdTime = new Date().toLocaleDateString();
     this.createdBy = 'Administrator';
-    this.modifiedTime = new Date();
+    this.modifiedTime = new Date().toLocaleDateString();
     this.modifiedBy = 'Administrator';
   }
 }

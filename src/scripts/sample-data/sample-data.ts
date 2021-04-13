@@ -9,7 +9,7 @@
   ├─ readme.txt
   ├─ note.txt
 */
-const root = {
+const root: any = {
   id: 'folder-root',
   name: 'root',
   createdTime: '2021/04/12 08:54:00',
@@ -48,6 +48,26 @@ const root = {
               name: 'record 2',
               extension: 'ts',
               createdTime: '2021/04/12 09:16:24',
+              createdBy: 'Thinh Le',
+              modifiedTime: '',
+              modifiedBy: '',
+            },
+          ],
+        },
+        {
+          id: 'folder-000005',
+          name: 'd4ng3r0Us f0ld3r',
+          createdTime: '2021/04/13 14:49:00',
+          createdBy: 'Thinh Le',
+          modifiedTime: '',
+          modifiedBy: '',
+          folders: [],
+          files: [
+            {
+              id: 'file-000007',
+              name: 's4fe pr0gram',
+              extension: 'exe',
+              createdTime: 'A few second ago',
               createdBy: 'Thinh Le',
               modifiedTime: '',
               modifiedBy: '',

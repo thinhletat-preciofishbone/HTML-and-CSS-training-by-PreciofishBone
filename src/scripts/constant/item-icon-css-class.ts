@@ -5,6 +5,8 @@ const itemIconClass = {
   excel: 'bi bi-file-earmark-spreadsheet-fill excel-icon',
   powerPoint: 'bi bi-file-earmark-ppt-fill power-point-icon',
   oneNote: 'bi bi-journal-bookmark-fill one-note-icon',
+  program: 'bi bi-gear-fill program-icon',
+  file: 'bi bi-file',
 };
 
 export default itemIconClass;
