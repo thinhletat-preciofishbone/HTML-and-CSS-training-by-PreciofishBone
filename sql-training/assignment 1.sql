@@ -25,9 +25,9 @@ INNER JOIN Sales.SalesPerson salePerson ON person.BusinessEntityID = salePerson.
 INNER JOIN Sales.SalesOrderHeader saleOrderHeader ON salePerson.BusinessEntityID = saleOrderHeader.SalesPersonID
 
 -- Question 3: Write a query to display a list of customer names together with a count of the orders
-SELECT (IsNull(person.FirstName, '') + ' ' + IsNull(person.MiddleName, '') + ' ' + IsNull(person.LastName, '')) as 'Customer name', 
-count(saleOrderHeader.SalesOrderID) as 'Orders count'
+SELECT (IsNull(person.FirstName, '') + ' ' + IsNull(person.MiddleName, '') + ' ' + IsNull(person.LastName, '')) AS 'Customer name', 
+count(saleOrderHeader.SalesOrderID) AS 'Orders count'
 FROM Person.Person person
 INNER JOIN Sales.Customer saleCustomer ON person.BusinessEntityID = saleCustomer.PersonID
 INNER JOIN Sales.SalesOrderHeader saleOrderHeader ON saleOrderHeader.CustomerID = saleCustomer.CustomerID
-group by person.FirstName, person.MiddleName, person.LastName
+GROUP BY person.FirstName, person.MiddleName, person.LastName
