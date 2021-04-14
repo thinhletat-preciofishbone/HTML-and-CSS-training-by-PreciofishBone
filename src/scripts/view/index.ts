@@ -70,9 +70,9 @@ function createItemRecord(_item: any) {
 
       // write to local storage
       const urlParams = new URLSearchParams(window.location.search);
-      window.localStorage.setItem(
+      window.sessionStorage.setItem(
         urlParams.get('directory'),
-        _item.id,
+        _item,
       );
     });
   }

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -448,25 +448,6 @@ const header = {
 
 /***/ }),
 
-/***/ "./src/scripts/pages/home-page.ts":
-/*!****************************************!*\
-  !*** ./src/scripts/pages/home-page.ts ***!
-  \****************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utilities_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/_helper */ "./src/scripts/utilities/_helper.ts");
-/* harmony import */ var _document_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./document-table */ "./src/scripts/pages/document-table.ts");
-
-
-Object(_utilities_helper__WEBPACK_IMPORTED_MODULE_0__["default"])(() => {
-  _document_table__WEBPACK_IMPORTED_MODULE_1__["default"].loadEvents();
-});
-
-/***/ }),
-
 /***/ "./src/scripts/sample-data/sample-data.ts":
 /*!************************************************!*\
   !*** ./src/scripts/sample-data/sample-data.ts ***!
@@ -650,27 +631,6 @@ const pageServices = {
 
 /***/ }),
 
-/***/ "./src/scripts/utilities/_helper.ts":
-/*!******************************************!*\
-  !*** ./src/scripts/utilities/_helper.ts ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-const ready = fn => {
-  if (document.readyState !== 'loading') {
-    fn();
-  } else {
-    document.addEventListener('DOMContentLoaded', fn);
-  }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (ready);
-
-/***/ }),
-
 /***/ "./src/scripts/view/index.ts":
 /*!***********************************!*\
   !*** ./src/scripts/view/index.ts ***!
@@ -842,29 +802,17 @@ const view = {
 
 /***/ }),
 
-/***/ "./src/styles/pages/home-page.scss":
-/*!*****************************************!*\
-  !*** ./src/styles/pages/home-page.scss ***!
-  \*****************************************/
+/***/ 0:
+/*!***************************************************!*\
+  !*** multi ./src/scripts/pages/document-table.ts ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ 1:
-/*!********************************************************************************!*\
-  !*** multi ./src/scripts/pages/home-page.ts ./src/styles/pages/home-page.scss ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(/*! ./src/scripts/pages/home-page.ts */"./src/scripts/pages/home-page.ts");
-module.exports = __webpack_require__(/*! ./src/styles/pages/home-page.scss */"./src/styles/pages/home-page.scss");
+module.exports = __webpack_require__(/*! ./src/scripts/pages/document-table.ts */"./src/scripts/pages/document-table.ts");
 
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=home-page.js.map
+//# sourceMappingURL=document-table.js.map
