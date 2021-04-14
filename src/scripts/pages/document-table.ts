@@ -65,8 +65,11 @@ function saveANewItemEvent() {
 		.getElementsByClassName('save-new-item')[0]
 		.addEventListener('click', () => {
 			// get the current folder data
-			
+
 			let currentFolderData: any = documentTableServices.getCurrentFolderData();
+			if (!currentFolderData) {
+				currentFolderData = JSON.parse(sampleData);
+			}
 
 			// get the item info
 			// -- item name
@@ -109,15 +112,14 @@ function saveANewItemEvent() {
 				urlParams.get('directory') === 'root') {
 				view.renderDirectory();
 			} else {
-				console.log('currentFolderData.id', currentFolderData.id);
 				view.renderDirectory(currentFolderData.id);
 			}
 		});
 }
 
 function loadMenuBarEvents() {
-  createANewItemEvent();
-  saveANewItemEvent();
+	createANewItemEvent();
+	saveANewItemEvent();
 }
 
 function loadTableEvents() {
@@ -125,17 +127,19 @@ function loadTableEvents() {
 
 const header = {
 	loadEvents: () => {
-    loadMenuBarEvents();
-    loadTableEvents();
-    const folderDirectory = documentTableServices.getFolderDirectory();
-    if (folderDirectory === 'root') {
-      view.renderDirectory();
-    } else {
-      const folderId = documentTableServices.getFolderIdFromSessionStorage(
-        folderDirectory,
-      );
-      view.renderDirectory(folderId);
-    }
+		loadMenuBarEvents();
+		loadTableEvents();
+
+		// TODO
+		const folderDirectory = documentTableServices.getFolderDirectory();
+		if (folderDirectory === 'root') {
+			view.renderDirectory();
+		} else {
+			const folderId = documentTableServices.getFolderIdFromSessionStorage(
+				folderDirectory,
+			);
+			view.renderDirectory(folderId);
+		}
 	},
 };
 

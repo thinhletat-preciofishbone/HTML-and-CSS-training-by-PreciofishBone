@@ -325,9 +325,11 @@ const itemIconClass = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _view_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../view/index */ "./src/scripts/view/index.ts");
-/* harmony import */ var _classes_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../classes/_index */ "./src/scripts/classes/_index.ts");
-/* harmony import */ var _constant_document_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constant/document-table */ "./src/scripts/constant/document-table.ts");
-/* harmony import */ var _services_document_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/document-table */ "./src/scripts/services/document-table.ts");
+/* harmony import */ var _sample_data_sample_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sample-data/sample-data */ "./src/scripts/sample-data/sample-data.ts");
+/* harmony import */ var _classes_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../classes/_index */ "./src/scripts/classes/_index.ts");
+/* harmony import */ var _constant_document_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constant/document-table */ "./src/scripts/constant/document-table.ts");
+/* harmony import */ var _services_document_table__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/document-table */ "./src/scripts/services/document-table.ts");
+
 
 
 
@@ -338,10 +340,10 @@ function setNewItemModalInfo(_itemInfo) {
   document.getElementById('new-item-name-label').innerHTML = _itemInfo.name;
   document.getElementById("new-item-name").value = '';
 
-  if (_itemInfo.type === _constant_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].itemType.folder) {
-    document.getElementById('item-type').setAttribute('data-item-type', _constant_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].itemType.folder);
+  if (_itemInfo.type === _constant_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].itemType.folder) {
+    document.getElementById('item-type').setAttribute('data-item-type', _constant_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].itemType.folder);
   } else {
-    document.getElementById('item-type').setAttribute('data-item-type', _constant_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].itemType.file);
+    document.getElementById('item-type').setAttribute('data-item-type', _constant_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].itemType.file);
   }
 }
 
@@ -351,7 +353,7 @@ function createANewFolderEvent() {
     setNewItemModalInfo({
       title: 'Create a new folder',
       name: 'Folder name',
-      type: _constant_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].itemType.folder
+      type: _constant_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].itemType.folder
     });
   });
 }
@@ -362,7 +364,7 @@ function createANewFileEvent() {
     setNewItemModalInfo({
       title: 'Create a new file',
       name: 'File name',
-      type: _constant_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].itemType.file
+      type: _constant_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].itemType.file
     });
   });
 }
@@ -376,8 +378,13 @@ function saveANewItemEvent() {
   // save a new item
   document.getElementsByClassName('save-new-item')[0].addEventListener('click', () => {
     // get the current folder data
-    let currentFolderData = _services_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].getCurrentFolderData(); // get the item info
+    let currentFolderData = _services_document_table__WEBPACK_IMPORTED_MODULE_4__["default"].getCurrentFolderData();
+
+    if (!currentFolderData) {
+      currentFolderData = JSON.parse(_sample_data_sample_data__WEBPACK_IMPORTED_MODULE_1__["default"]);
+    } // get the item info
     // -- item name
+
 
     const itemNameInput = document.getElementById('new-item-name');
 
@@ -391,13 +398,13 @@ function saveANewItemEvent() {
     let newitemId = '';
     let newItemName = '';
 
-    if (itemTypeInput === _constant_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].itemType.folder) {
-      newitemId = 'folder-' + _services_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].makeTempId(5);
+    if (itemTypeInput === _constant_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].itemType.folder) {
+      newitemId = 'folder-' + _services_document_table__WEBPACK_IMPORTED_MODULE_4__["default"].makeTempId(5);
       newItemName = itemNameInput.value;
-      const folderItem = new _classes_index__WEBPACK_IMPORTED_MODULE_1__["default"].Folder(newitemId, newItemName);
+      const folderItem = new _classes_index__WEBPACK_IMPORTED_MODULE_2__["default"].Folder(newitemId, newItemName);
       currentFolderData.folders.push(folderItem);
     } else {
-      newitemId = 'file-' + _services_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].makeTempId(5);
+      newitemId = 'file-' + _services_document_table__WEBPACK_IMPORTED_MODULE_4__["default"].makeTempId(5);
       newItemName = itemNameInput.value;
       let fileExtension = ''; // file does have extension
 
@@ -406,7 +413,7 @@ function saveANewItemEvent() {
         newItemName = newItemName.substring(0, newItemName.lastIndexOf('.'));
       }
 
-      const fileItem = new _classes_index__WEBPACK_IMPORTED_MODULE_1__["default"].File(newitemId, newItemName, fileExtension);
+      const fileItem = new _classes_index__WEBPACK_IMPORTED_MODULE_2__["default"].File(newitemId, newItemName, fileExtension);
       currentFolderData.files.push(fileItem);
     } // get the current directory
 
@@ -417,7 +424,6 @@ function saveANewItemEvent() {
     if (!urlParams.has('directory') || urlParams.get('directory') === 'root') {
       _view_index__WEBPACK_IMPORTED_MODULE_0__["default"].renderDirectory();
     } else {
-      console.log('currentFolderData.id', currentFolderData.id);
       _view_index__WEBPACK_IMPORTED_MODULE_0__["default"].renderDirectory(currentFolderData.id);
     }
   });
@@ -433,13 +439,14 @@ function loadTableEvents() {}
 const header = {
   loadEvents: () => {
     loadMenuBarEvents();
-    loadTableEvents();
-    const folderDirectory = _services_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].getFolderDirectory();
+    loadTableEvents(); // TODO
+
+    const folderDirectory = _services_document_table__WEBPACK_IMPORTED_MODULE_4__["default"].getFolderDirectory();
 
     if (folderDirectory === 'root') {
       _view_index__WEBPACK_IMPORTED_MODULE_0__["default"].renderDirectory();
     } else {
-      const folderId = _services_document_table__WEBPACK_IMPORTED_MODULE_3__["default"].getFolderIdFromSessionStorage(folderDirectory);
+      const folderId = _services_document_table__WEBPACK_IMPORTED_MODULE_4__["default"].getFolderIdFromSessionStorage(folderDirectory);
       _view_index__WEBPACK_IMPORTED_MODULE_0__["default"].renderDirectory(folderId);
     }
   }
@@ -714,7 +721,7 @@ function createItemRecord(_item) {
       changeDirectory(_item.id, _item.name); // write to local storage
 
       const urlParams = new URLSearchParams(window.location.search);
-      window.sessionStorage.setItem(urlParams.get('directory'), _item);
+      window.sessionStorage.setItem(urlParams.get('directory'), JSON.stringify(_item));
     });
   }
 

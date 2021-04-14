@@ -72,7 +72,7 @@ function createItemRecord(_item: any) {
       const urlParams = new URLSearchParams(window.location.search);
       window.sessionStorage.setItem(
         urlParams.get('directory'),
-        _item,
+        JSON.stringify(_item),
       );
     });
   }
