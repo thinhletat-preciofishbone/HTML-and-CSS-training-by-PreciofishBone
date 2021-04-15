@@ -9,6 +9,7 @@
   ├─ readme.txt
   ├─ note.txt
 */
+
 const root: any = {
   id: 'folder-root',
   name: 'root',
@@ -16,7 +17,7 @@ const root: any = {
   createdBy: 'Administrator',
   modifiedTime: '2021/04/12 08:54:00',
   modifiedBy: 'Administrator',
-  folders: [
+  subFolderItems: [
     {
       id: 'folder-000002',
       name: 'assignment',
@@ -24,7 +25,7 @@ const root: any = {
       createdBy: 'Thinh Le',
       modifiedTime: '2021/04/12 09:07:00',
       modifiedBy: 'Thinh Le',
-      folders: [
+      subFolderItems: [
         {
           id: 'folder-000003',
           name: 'record',
@@ -32,8 +33,8 @@ const root: any = {
           createdBy: 'Thinh Le',
           modifiedTime: '',
           modifiedBy: '',
-          folders: [],
-          files: [
+          subFolderItems: [],
+          fileItems: [
             {
               id: 'file-000005',
               name: 'record 1',
@@ -61,8 +62,8 @@ const root: any = {
           createdBy: 'Thinh Le',
           modifiedTime: '',
           modifiedBy: '',
-          folders: [],
-          files: [
+          subFolderItems: [],
+          fileItems: [
             {
               id: 'file-000007',
               name: 's4fe pr0gram',
@@ -75,7 +76,7 @@ const root: any = {
           ],
         },
       ],
-      files: [
+      fileItems: [
         {
           id: 'file-000003',
           name: 'assignment 1',
@@ -97,7 +98,7 @@ const root: any = {
       ],
     },
   ],
-  files: [
+  fileItems: [
     {
       id: 'file-000001',
       name: 'readme',

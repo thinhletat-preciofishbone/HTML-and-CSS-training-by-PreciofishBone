@@ -1,5 +1,6 @@
 import pageServices from './page-services';
-import rootData from '../sample-data/sample-data';
+import _folderData from '../sample-data/sample-data';
+import documentTableConstants from '../constant/document-table';
 
 const documentTableServices = {
   getFolderDirectoryFromQueryString: () => {
@@ -15,12 +16,12 @@ const documentTableServices = {
     );
   },
   getRootFolderData: () => {
-    return rootData;
+    return _folderData;
   },
   getCurrentFolderData: () => {
     const folderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
     if (folderDirectory === 'root') {
-      return rootData;
+      return _folderData;
     }
     return pageServices.getFolderDataFromSessionStorage(
       folderDirectory,
@@ -42,6 +43,32 @@ const documentTableServices = {
       _folderData,
     );
   },
+  addNewItemToCurrentFolderInRootData: (
+    _folderData: any,
+    _folderId: string,
+    _newItemData: any,
+  ) => {
+    if (_folderData.id === _folderId) {
+      if (
+        (_newItemData.type = documentTableConstants.itemType.folder)
+      ) {
+        _folderData.subFolderItems.push(_newItemData);
+      } else {
+        _folderData.fileItems.push(_newItemData);
+      }
+      return _folderData;
+    }
+    for (const child of _folderData.subFolderItems) {
+      const result = documentTableServices.addNewItemToCurrentFolderInRootData(
+        child,
+        _folderId,
+        _newItemData,
+      );
+      if (result) {
+        return result;
+      }
+    }
+  },
   searchFolderById: (
     _folderData: any,
     _folderId: string = 'folder-root',
@@ -49,7 +76,7 @@ const documentTableServices = {
     if (_folderData.id === _folderId) {
       return _folderData;
     }
-    for (const child of _folderData.folders) {
+    for (const child of _folderData.subFolderItems) {
       const result = documentTableServices.searchFolderById(
         child,
         _folderId,
@@ -59,13 +86,12 @@ const documentTableServices = {
       }
     }
   },
-
   makeTempId: (_length: number) => {
     const result = [];
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < _length; i += 1) {
       result.push(
         characters.charAt(
           Math.floor(Math.random() * charactersLength),

@@ -1,6 +1,6 @@
 import ready from '../utilities/_helper';
-import documentTablePage from './document-table';
+import documentTable from './document-table';
 
 ready(() => {
-  documentTablePage.loadEvents();
+  documentTable.loadEvents();
 });
