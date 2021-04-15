@@ -36,7 +36,6 @@ GROUP BY director.firstName, director.lastName
 HAVING COUNT(movieDirectors.movieId) >= 500
 ORDER BY COUNT(movieDirectors.movieId) desc
 
-
 -- Question 3: We want to find actors that played five or more roles in the same movie during the year 2010. 
 -- Notice that CASTS may have occasional duplicates, but we are not interested in these: 
 -- we want actors that had five or more distinct roles in the same movie in the year 2010. 
@@ -63,7 +62,9 @@ INNER JOIN Casts casts ON casts.actorId = actor.id
 INNER JOIN Movie movie ON movie.id = casts.movieId
 WHERE movie.name = 'Officer 444';
 -- (!) New Movie table is created and the old one is renamed to Movie_old
-ALTER TABLE Movie ADD INDEX movieNameIndex HASH (name) WITH (BUCKET_COUNT = 1600000);
+ALTER TABLE Movie ADD INDEX movieNameIndex HASH (name) WITH (BUCKET_COUNT = 2000000);
+ALTER TABLE Casts ADD INDEX castsActorIndex NONCLUSTERED (actorId);
+ALTER TABLE Casts ADD INDEX castsMovieIndex NONCLUSTERED (movieId);
 
 -- From question 2, the index should be b-tree index for movieDirectors.movieId (because it uses range operator (<, >, between) and order by count):
 SELECT (IsNull(director.firstName, '') + ' ' + IsNull(director.lastName, '')) AS 'Director name', COUNT(movieDirectors.movieId) AS 'Movie directed'
@@ -74,7 +75,8 @@ GROUP BY director.firstName, director.lastName
 HAVING COUNT(movieDirectors.movieId) >= 500
 ORDER BY COUNT(movieDirectors.movieId) desc
 
-ALTER TABLE movieDirectors ADD INDEX movieDescOrder (movieId DESC)
+ALTER TABLE movieDirectors ADD INDEX movieDirectorsMovieIndex NONCLUSTERED (movieId)
+ALTER TABLE movieDirectors ADD INDEX movieDirectorsDirectorIndex NONCLUSTERED (directorId)
 
 -- From question 3, we will add two index types (b-tree and hash)
 SELECT (IsNull(actor.firstName, '') + ' ' + IsNull(actor.lastName, '')) AS 'Actor name', movie."name",
@@ -85,8 +87,6 @@ INNER JOIN Movie movie ON movie.id = casts.movieId
 WHERE movie.year = 2010
 GROUP BY actor.firstName, actor.lastName, movie."name"
 HAVING COUNT(DISTINCT casts."role") >= 5;
-
-ALTER TABLE Movie ADD INDEX movieYearIndex HASH (year) WITH (BUCKET_COUNT = 1600000);
 
 -- (!) The table movieDirectors contains some duplicate rows
 -- Check for duplicate rows from Casts
@@ -116,4 +116,5 @@ AS (SELECT actorId, movieId, "role", ROW_NUMBER() OVER (
 DELETE FROM CTE WHERE DuplicateCount > 1;
 
 -- Add index
-ALTER TABLE Casts ADD INDEX movieRoleIndex ("role")
+ALTER TABLE Movie ADD INDEX movieYearIndex HASH (year) WITH (BUCKET_COUNT = 1600000);
+ALTER TABLE Casts ADD INDEX castsRoleIndex NONCLUSTERED ("role")

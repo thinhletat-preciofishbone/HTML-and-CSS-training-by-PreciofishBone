@@ -30,4 +30,14 @@ AS
 	WHERE movie.year = @year AND gerne.genre = @movieGenre AND role like '%self'
 GO
 
-EXECUTE getMovieDetails 2007, 'Short';
+EXECUTE getMovieDetails 2004, 'Short';
+
+SELECT year, count(name)
+from Movie
+group by year
+
+SELECT genre, count(movieId)
+from Genre gerne
+INNER JOIN Movie movie ON gerne.movieId = movie.id
+where movie.year = 2004
+group by genre
