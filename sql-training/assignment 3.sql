@@ -42,7 +42,7 @@ HAVING COUNT(DISTINCT casts."role") >= 5;
 
 -- Question 4: Create Index to improve performance of these queries
 -- (!) We have to optimized some tables, therefore, some foreign keys will be removed.
--- (!) Create these foreign keys again after finish indexing the tables
+-- (!) Create these foreign keys again after finish optimizing and indexing the tables.
 
 -- From question 1, the index should be hash table index for movie.name (because it uses = or <> operator):
 SELECT (IsNull(actor.firstName, '') + ' ' + IsNull(actor.lastName, '')) AS 'Actor name'
