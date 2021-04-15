@@ -3,11 +3,11 @@ const pageServices = {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(_parameter);
   },
-  getFolderDataFromSessionStorage: (_key: string) => {
-    return JSON.parse(window.sessionStorage.getItem(_key));
+  getFolderDataFromBrowserStorage: (_key: string) => {
+    return JSON.parse(window.localStorage.getItem(_key));
   },
-  setDataToSessionStorage: (_key: string, _value: string) => {
-    return window.sessionStorage.setItem(_key, _value);
+  setDataToBrowserStorage: (_key: string, _value: string) => {
+    return window.localStorage.setItem(_key, _value);
   },
 };
 

@@ -1,5 +1,5 @@
 import pageServices from './page-services';
-import _folderData from '../sample-data/sample-data';
+import rootData from '../sample-data/sample-data';
 import documentTableConstants from '../constant/document-table';
 
 const documentTableServices = {
@@ -10,20 +10,20 @@ const documentTableServices = {
     }
     return folderDirectory;
   },
-  getFolderIdFromSessionStorage: (_folderDirectory: string) => {
-    return pageServices.getFolderDataFromSessionStorage(
+  getFolderIdFromBrowserStorage: (_folderDirectory: string) => {
+    return pageServices.getFolderDataFromBrowserStorage(
       _folderDirectory,
     );
   },
   getRootFolderData: () => {
-    return _folderData;
+    return rootData;
   },
   getCurrentFolderData: () => {
     const folderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
     if (folderDirectory === 'root') {
-      return _folderData;
+      return rootData;
     }
-    return pageServices.getFolderDataFromSessionStorage(
+    return pageServices.getFolderDataFromBrowserStorage(
       folderDirectory,
     );
   },
@@ -36,9 +36,9 @@ const documentTableServices = {
       `?directory=${newFolderDirectory}`,
     );
   },
-  setFolderDirectoryToSessionStorage: (_folderData: any) => {
+  setFolderDirectoryToBrowserStorage: (_folderData: any) => {
     const currentFolderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
-    pageServices.setDataToSessionStorage(
+    pageServices.setDataToBrowserStorage(
       currentFolderDirectory,
       _folderData,
     );

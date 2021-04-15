@@ -477,9 +477,7 @@ const documentTable = {
   clickOnAFolderEvent: _item => {
     _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].updateFolderDirectoryInQueryString(_item.name);
     let clickedFolderData = _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].searchFolderById(_services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].getRootFolderData(), _item.id);
-    console.log('clickedFolderData id:' + _item.id);
-    console.log('clickedFolderData: ', clickedFolderData);
-    _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].setFolderDirectoryToSessionStorage(JSON.stringify(clickedFolderData));
+    _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].setFolderDirectoryToBrowserStorage(JSON.stringify(clickedFolderData));
     documentTable.renderTableData(clickedFolderData);
   },
   renderItemNameData: _item => {
@@ -723,8 +721,8 @@ const documentTableServices = {
 
     return folderDirectory;
   },
-  getFolderIdFromSessionStorage: _folderDirectory => {
-    return _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].getFolderDataFromSessionStorage(_folderDirectory);
+  getFolderIdFromBrowserStorage: _folderDirectory => {
+    return _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].getFolderDataFromBrowserStorage(_folderDirectory);
   },
   getRootFolderData: () => {
     return _sample_data_sample_data__WEBPACK_IMPORTED_MODULE_1__["default"];
@@ -736,16 +734,16 @@ const documentTableServices = {
       return _sample_data_sample_data__WEBPACK_IMPORTED_MODULE_1__["default"];
     }
 
-    return _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].getFolderDataFromSessionStorage(folderDirectory);
+    return _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].getFolderDataFromBrowserStorage(folderDirectory);
   },
   updateFolderDirectoryInQueryString: _directoryName => {
     const folderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
     const newFolderDirectory = `${folderDirectory}/${_directoryName}`;
     window.history.pushState(null, null, `?directory=${newFolderDirectory}`);
   },
-  setFolderDirectoryToSessionStorage: _folderData => {
+  setFolderDirectoryToBrowserStorage: _folderData => {
     const currentFolderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
-    _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].setDataToSessionStorage(currentFolderDirectory, _folderData);
+    _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].setDataToBrowserStorage(currentFolderDirectory, _folderData);
   },
   addNewItemToCurrentFolderInRootData: (_folderData, _folderId, _newItemData) => {
     if (_folderData.id === _folderId) {
@@ -809,11 +807,11 @@ const pageServices = {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(_parameter);
   },
-  getFolderDataFromSessionStorage: _key => {
-    return JSON.parse(window.sessionStorage.getItem(_key));
+  getFolderDataFromBrowserStorage: _key => {
+    return JSON.parse(window.localStorage.getItem(_key));
   },
-  setDataToSessionStorage: (_key, _value) => {
-    return window.sessionStorage.setItem(_key, _value);
+  setDataToBrowserStorage: (_key, _value) => {
+    return window.localStorage.setItem(_key, _value);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (pageServices);

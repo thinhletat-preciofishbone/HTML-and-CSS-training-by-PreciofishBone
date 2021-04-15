@@ -151,9 +151,7 @@ const documentTable = {
 	clickOnAFolderEvent: (_item: any) => {
 		documentTableServices.updateFolderDirectoryInQueryString(_item.name);
 		let clickedFolderData: any = documentTableServices.searchFolderById(documentTableServices.getRootFolderData(), _item.id);
-		console.log('clickedFolderData id:' + _item.id);
-		console.log('clickedFolderData: ', clickedFolderData);
-		documentTableServices.setFolderDirectoryToSessionStorage(JSON.stringify(clickedFolderData));
+		documentTableServices.setFolderDirectoryToBrowserStorage(JSON.stringify(clickedFolderData));
 		documentTable.renderTableData(clickedFolderData);
 	},
 	renderItemNameData: (_item: any) => {
