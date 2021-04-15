@@ -15,7 +15,6 @@ module.exports = {
       'error',
       process.platform === 'win32' ? 'windows' : 'unix',
     ],
-    indent: ["error", 2, { "VariableDeclarator": 2 }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 };

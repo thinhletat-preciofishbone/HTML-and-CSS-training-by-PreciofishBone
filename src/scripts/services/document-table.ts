@@ -1,7 +1,8 @@
 import pageServices from './page-services';
+import rootData from '../sample-data/sample-data';
 
 const documentTableServices = {
-  getFolderDirectory: () => {
+  getFolderDirectoryFromQueryString: () => {
     const folderDirectory = pageServices.getURLParams('directory');
     if (folderDirectory === null || folderDirectory === 'root') {
       return 'root';
@@ -9,12 +10,56 @@ const documentTableServices = {
     return folderDirectory;
   },
   getFolderIdFromSessionStorage: (_folderDirectory: string) => {
-    return pageServices.getDataFromSessionStorage(_folderDirectory);
+    return pageServices.getFolderDataFromSessionStorage(
+      _folderDirectory,
+    );
+  },
+  getRootFolderData: () => {
+    return rootData;
   },
   getCurrentFolderData: () => {
-    const folderDirectory = documentTableServices.getFolderDirectory();
-    return pageServices.getDataFromSessionStorage(folderDirectory);
+    const folderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
+    if (folderDirectory === 'root') {
+      return rootData;
+    }
+    return pageServices.getFolderDataFromSessionStorage(
+      folderDirectory,
+    );
   },
+  updateFolderDirectoryInQueryString: (_directoryName: string) => {
+    const folderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
+    const newFolderDirectory = `${folderDirectory}/${_directoryName}`;
+    window.history.pushState(
+      null,
+      null,
+      `?directory=${newFolderDirectory}`,
+    );
+  },
+  setFolderDirectoryToSessionStorage: (_folderData: any) => {
+    const currentFolderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
+    pageServices.setDataToSessionStorage(
+      currentFolderDirectory,
+      _folderData,
+    );
+  },
+  searchFolderById: (
+    _folderData: any,
+    _folderId: string = 'folder-root',
+  ) => {
+    if (_folderData.id === _folderId) {
+      return _folderData;
+    }
+    for (const child of _folderData.folders) {
+      const result = documentTableServices.searchFolderById(
+        child,
+        _folderId,
+      );
+      if (result) {
+        return result;
+      }
+    }
+  },
+
   makeTempId: (_length: number) => {
     const result = [];
     const characters =

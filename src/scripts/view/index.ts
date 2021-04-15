@@ -1,7 +1,7 @@
 import sampleData from '../sample-data/sample-data';
 import itemIconCSSClasses from '../constant/item-icon-css-class';
 
-let targetfolder: any = sampleData;
+const targetfolder: any = sampleData;
 
 export function getCurrentFolderData() {
   return targetfolder;
@@ -68,7 +68,7 @@ function createItemRecord(_item: any) {
     td.addEventListener('click', () => {
       changeDirectory(_item.id, _item.name);
 
-      // write to local storage
+      // write to session storage
       const urlParams = new URLSearchParams(window.location.search);
       window.sessionStorage.setItem(
         urlParams.get('directory'),
@@ -124,23 +124,15 @@ function searchDirectoryById(
   }
 }
 
-function renderDirectory(_directoryId: string = 'folder-root') {
+function renderDirectory(folderData: any) {
   // Find tbody element
   const tbody = document
     .getElementsByClassName('document-table')[0]
     .getElementsByTagName('tbody')[0];
   tbody.innerHTML = '';
 
-  // if the current directory is root
-  if (_directoryId === 'folder-root') {
-    displayItems(sampleData.folders);
-    displayItems(sampleData.files);
-  } else {
-    // find the node
-    targetfolder = searchDirectoryById(sampleData, _directoryId);
-    displayItems(targetfolder.folders);
-    displayItems(targetfolder.files);
-  }
+  displayItems(folderData.folders);
+  displayItems(folderData.files);
 }
 
 function changeDirectory(

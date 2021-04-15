@@ -3,8 +3,11 @@ const pageServices = {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(_parameter);
   },
-  getDataFromSessionStorage: (_key: string) => {
-    return window.sessionStorage.getItem(_key);
+  getFolderDataFromSessionStorage: (_key: string) => {
+    return JSON.parse(window.sessionStorage.getItem(_key));
+  },
+  setDataToSessionStorage: (_key: string, _value: string) => {
+    return window.sessionStorage.setItem(_key, _value);
   },
 };
 
