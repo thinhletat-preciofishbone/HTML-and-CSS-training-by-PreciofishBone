@@ -1,33 +1,33 @@
--- Question 1: Write a query to get data from SalesOrderDetail table to show a text ("Under 10", "10-19", "20-29", "30-39" or "40 and over") 
--- based on the OrderQty value by using Case function.
-SELECT SalesOrderID, SalesOrderDetailID, CarrierTrackingNumber, OrderQty =  
-      CASE  
-         WHEN OrderQty < 10 THEN 'Under 10'  
-         WHEN OrderQty > 10 and OrderQty < 20 THEN '10-19'  
-         WHEN OrderQty > 20 and OrderQty < 30 THEN '20-29'  
-         WHEN OrderQty > 30 and OrderQty < 40 THEN '30-39'  
-         ELSE '40 and over'  
-      END
-FROM Sales.SalesOrderDetail
--- Test result (select additional conditions below)
-WHERE SalesOrderID = 43659 
-or SalesOrderID = 43875 
-or SalesOrderID = 43881 
-or SalesOrderID = 43875 
-or SalesOrderID = 46345
-or SalesOrderID = 50270;
+/*
+CREATE [ OR ALTER ] { PROC | PROCEDURE }
+    [schema_name.] procedure_name [ ; number ]
+    [ { @parameter [ type_schema_name. ] data_type }
+        [ VARYING ] [ = default ] [ OUT | OUTPUT | [READONLY]
+    ] [ ,...n ]
+[ WITH <procedure_option> [ ,...n ] ]
+[ FOR REPLICATION ]
+AS { [ BEGIN ] sql_statement [;] [ ...n ] [ END ] }
+[;]
 
--- Question 2: Write a query to display the SalesOrderId, SalesQuota, Bonus 
--- and also display the FirstName, MiddleName, LastName of SalesPerson
-SELECT saleOrderHeader.SalesOrderId, salePerson.SalesQuota, salePerson.Bonus, person.FirstName, person.MiddleName, person.LastName
-FROM Person.Person person
-INNER JOIN Sales.SalesPerson salePerson ON person.BusinessEntityID = salePerson.BusinessEntityID
-INNER JOIN Sales.SalesOrderHeader saleOrderHeader ON salePerson.BusinessEntityID = saleOrderHeader.SalesPersonID
+<procedure_option> ::=
+    [ ENCRYPTION ]
+    [ RECOMPILE ]
+    [ EXECUTE AS Clause ]
+*/
 
--- Question 3: Write a query to display a list of customer names together with a count of the orders
-SELECT (IsNull(person.FirstName, '') + ' ' + IsNull(person.MiddleName, '') + ' ' + IsNull(person.LastName, '')) as 'Customer name', 
-count(saleOrderHeader.SalesOrderID) as 'Orders count'
-FROM Person.Person person
-INNER JOIN Sales.Customer saleCustomer ON person.BusinessEntityID = saleCustomer.PersonID
-INNER JOIN Sales.SalesOrderHeader saleOrderHeader ON saleOrderHeader.CustomerID = saleCustomer.CustomerID
-group by person.FirstName, person.MiddleName, person.LastName
+-- (!) We will add a new index for Gerne table on genre column (hash)
+ALTER TABLE Genre ADD INDEX genreGenreIndex HASH (genre) WITH (BUCKET_COUNT = 1000000);
+
+CREATE PROCEDURE getMovieDetails
+    @year NVARCHAR(50),
+    @movieGenre NVARCHAR(50)
+AS
+	SELECT movie.name, movie.year, gerne.genre, (IsNull(actor.firstName, '') + ' ' + IsNull(actor.lastName, '')) AS 'Actor name'
+	FROM Actor actor
+	INNER JOIN Casts casts ON casts.actorId = actor.id
+	INNER JOIN Movie movie ON movie.id = casts.movieId
+	INNER JOIN Genre gerne ON gerne.movieId = movie.id
+	WHERE movie.year = @year AND gerne.genre = @movieGenre AND role like '%self'
+GO
+
+EXECUTE getMovieDetails 2007, 'Short';
