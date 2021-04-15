@@ -1,11 +1,23 @@
 ﻿-- After successfully imported, alter foreign keys
-ALTER TABLE [dbo].[Casts]
-ADD FOREIGN KEY (actorId) REFERENCES Actor(id),
-FOREIGN KEY (movieId) REFERENCES Movie(id);
+ALTER TABLE Casts
+	ADD CONSTRAINT casts_actor_ForeignKey
+		FOREIGN KEY(actorId)
+		REFERENCES Actor (id)
 
-ALTER TABLE [dbo].[MovieDirectors]
-ADD FOREIGN KEY (movieId) REFERENCES Movie(id),
-FOREIGN KEY (directorId) REFERENCES Directors(id);
+ALTER TABLE Casts
+	ADD CONSTRAINT casts_movie_ForeignKey
+		FOREIGN KEY(movieId)
+		REFERENCES Movie(id)
+
+ALTER TABLE MovieDirectors
+	ADD CONSTRAINT movieDirectors_movie_ForeignKey
+		FOREIGN KEY(movieId)
+		REFERENCES Movie (id)
+
+ALTER TABLE MovieDirectors
+	ADD CONSTRAINT movieDirectors_director_ForeignKey
+		FOREIGN KEY(directorId)
+		REFERENCES Director(id)
 
 -- Question 1: List the first and last names of all the actors who played in the movie 'Officer 444'. [~13 rows expected]
 SELECT (IsNull(actor.firstName, '') + ' ' + IsNull(actor.lastName, '')) AS 'Actor name'
