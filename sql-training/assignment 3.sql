@@ -39,31 +39,69 @@ WHERE movie.year = 2010
 GROUP BY actor.firstName, actor.lastName, movie."name"
 HAVING COUNT(DISTINCT casts."role") >= 5;
 
--- Temp
-/*
-CREATE [ OR ALTER ] { PROC | PROCEDURE }
-    [schema_name.] procedure_name [ ; number ]
-    [ { @parameter [ type_schema_name. ] data_type }
-        [ VARYING ] [ = default ] [ OUT | OUTPUT | [READONLY]
-    ] [ ,...n ]
-[ WITH <procedure_option> [ ,...n ] ]
-[ FOR REPLICATION ]
-AS { [ BEGIN ] sql_statement [;] [ ...n ] [ END ] }
-[;]
 
-<procedure_option> ::=
-    [ ENCRYPTION ]
-    [ RECOMPILE ]
-    [ EXECUTE AS Clause ]
+-- Question 4: Create Index to improve performance of these queries
+-- (!) We have to optimized some tables, therefore, some foreign keys will be removed.
+-- (!) Create these foreign keys again after finish indexing the tables
 
-CREATE PROCEDURE findHigherRatingMovies
-    @year NVARCHAR(50),
-    @standardValue NVARCHAR(50)
-AS
+-- From question 1, the index should be hash table index for movie.name (because it uses = or <> operator):
+SELECT (IsNull(actor.firstName, '') + ' ' + IsNull(actor.lastName, '')) AS 'Actor name'
+FROM Actor actor
+INNER JOIN Casts casts ON casts.actorId = actor.id
+INNER JOIN Movie movie ON movie.id = casts.movieId
+WHERE movie.name = 'Officer 444';
+-- (!) New Movie table is created and the old one is renamed to Movie_old
+ALTER TABLE Movie ADD INDEX movieNameIndex HASH (name) WITH (BUCKET_COUNT = 1600000);
 
-    SET NOCOUNT ON;
-    print @LastName + @FirstName
-GO
+-- From question 2, the index should be b-tree index for movieDirectors.movieId (because it uses range operator (<, >, between) and order by count):
+SELECT (IsNull(director.firstName, '') + ' ' + IsNull(director.lastName, '')) AS 'Director name', COUNT(movieDirectors.movieId) AS 'Movie directed'
+FROM Director director
+INNER JOIN MovieDirectors movieDirectors ON movieDirectors.directorId = director.id
+INNER JOIN Movie movie ON movie.id = movieDirectors.movieId
+GROUP BY director.firstName, director.lastName
+HAVING COUNT(movieDirectors.movieId) >= 500
+ORDER BY COUNT(movieDirectors.movieId) desc
 
-EXECUTE higherRatingMovies N'Ackerman', N'Pilar';
-*/
+ALTER TABLE movieDirectors ADD INDEX movieDescOrder (movieId DESC)
+
+-- From question 3, we will add two index types (b-tree and hash)
+SELECT (IsNull(actor.firstName, '') + ' ' + IsNull(actor.lastName, '')) AS 'Actor name', movie."name",
+COUNT(DISTINCT casts."role") AS 'Number of distinct roles'
+FROM Actor actor
+INNER JOIN Casts casts ON casts.actorId = actor.id
+INNER JOIN Movie movie ON movie.id = casts.movieId
+WHERE movie.year = 2010
+GROUP BY actor.firstName, actor.lastName, movie."name"
+HAVING COUNT(DISTINCT casts."role") >= 5;
+
+ALTER TABLE Movie ADD INDEX movieYearIndex HASH (year) WITH (BUCKET_COUNT = 1600000);
+
+-- (!) The table movieDirectors contains some duplicate rows
+-- Check for duplicate rows from Casts
+SELECT actorId, movieId, "role", COUNT(*)
+FROM Casts
+group by actorId, movieId, "role"
+having COUNT(*) > 1
+-- or
+WITH CTE([actorId], 
+    [movieId], 
+    ["role"], 
+    duplicateCount)
+AS (SELECT actorId, movieId, "role", ROW_NUMBER() OVER (
+	PARTITION BY actorId, movieId, "role" ORDER BY "role") AS DuplicateCount
+    FROM Casts)
+SELECT *
+FROM CTE where duplicateCount > 1;
+
+-- Delete duplicate rows from Casts
+WITH CTE([actorId], 
+    [movieId], 
+    ["role"], 
+    duplicateCount)
+AS (SELECT actorId, movieId, "role", ROW_NUMBER() OVER (
+	PARTITION BY actorId, movieId, "role" ORDER BY "role") AS DuplicateCount
+    FROM Casts)
+DELETE FROM CTE WHERE DuplicateCount > 1;
+
+-- Add index
+ALTER TABLE Casts ADD INDEX movieRoleIndex ("role")
