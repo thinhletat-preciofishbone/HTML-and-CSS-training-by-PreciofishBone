@@ -1,6 +1,6 @@
 import ready from '../utilities/_helper';
-import renderGrid from '../components/_grid';
+import documentTable from './document-table';
 
 ready(() => {
-  renderGrid();
+  documentTable.loadEvents();
 });

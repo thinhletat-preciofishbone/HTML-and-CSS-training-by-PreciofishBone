@@ -3,6 +3,26 @@
     font-size: 19px;
 }
 
+.word-icon {
+    color: $word-background-color;
+}
+
+.excel-icon {
+    color: $excel-background-color;
+}
+
+.power-point-icon {
+    color: $power-point-background-color;
+}
+
+.one-note-icon {
+    color: $one-note-background-color;
+}
+
+.program-icon {
+    color: $program-icon-color;
+}
+
 .new-file-icon {
     position: absolute;
     left: 0.3em;
