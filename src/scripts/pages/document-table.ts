@@ -1,7 +1,6 @@
 import classes from '../classes/_index';
 import documentTableConstants from '../constant/document-table';
 import documentTableServices from '../services/document-table';
-import itemIconCSSClasses from '../constant/item-icon-css-class';
 
 const documentTable = {
 	setNewItemModalInfo: (_itemInfo: {
@@ -61,23 +60,28 @@ const documentTable = {
 		let name = _itemInputData.name.value;
 		let extension = '';
 		let type = documentTableConstants.itemType.folder;
+
 		if (_itemInputData.type === documentTableConstants.itemType.folder) {
 			id = 'folder-' + documentTableServices.makeTempId(5);
 		} else {
 			id = 'file-' + documentTableServices.makeTempId(5);
+
 			// file does have extension
 			if (name.lastIndexOf('.') !== -1) {
 				extension = name.split('.').pop();
 				name = name.substring(0, name.lastIndexOf('.'));
 			}
+
 			type = documentTableConstants.itemType.file;
 		}
+
 		return { id, name, extension, type };
 	},
 	getItemInputData: () => {
 		// -- item name
 		const name = <HTMLInputElement>document
 			.getElementById('new-item-name');
+
 		// -- item type
 		const type = document
 			.getElementById('item-type')
@@ -98,14 +102,20 @@ const documentTable = {
 				let itemInputData = documentTable.getItemInputData();
 				let newItemData = documentTable.setNewItemData(itemInputData);
 				let item = {};
+				
 				if (itemInputData.type === documentTableConstants.itemType.folder) {
 					// a folder
 					item = new classes.Folder(newItemData.id, newItemData.name);
 				} else {
 					item = new classes.File(newItemData.id, newItemData.name, newItemData.extension);
 				}
+
 				currentFolderData = documentTableServices.addNewItemToCurrentFolderInRootData(documentTableServices.getRootFolderData(), currentFolderData.id, item);
+				console.log('currentFolderData after saved: ', currentFolderData);
 				documentTable.renderTableData(currentFolderData);
+
+				// we also need to update the current folder's sub-folders and files data in browser storage/database:
+				
 			});
 	},
 	loadMenuBarEvents: () => {
@@ -114,29 +124,9 @@ const documentTable = {
 	},
 	createItemIcon: (_extension: string) => {
 		const icon = document.createElement('i');
-		if (_extension !== undefined) {
-			switch (_extension) {
-				case 'txt':
-					icon.setAttribute('class', itemIconCSSClasses.text);
-					break;
-				case 'doc':
-				case 'docx':
-					icon.setAttribute('class', itemIconCSSClasses.word);
-					break;
-				case 'xml':
-				case 'csv':
-				case 'xlsx':
-					icon.setAttribute('class', itemIconCSSClasses.excel);
-					break;
-				case 'exe':
-					icon.setAttribute('class', itemIconCSSClasses.program);
-					break;
-				default:
-					icon.setAttribute('class', itemIconCSSClasses.file);
-			}
-		} else {
-			icon.setAttribute('class', itemIconCSSClasses.folder);
-		}
+		const iconCSSClass = documentTableServices.getItemIconCSSClass(_extension);
+		icon.setAttribute('class', iconCSSClass);
+
 		return icon;
 	},
 	renderItemTypeData: (_item: any) => {
@@ -146,11 +136,13 @@ const documentTable = {
 		td.setAttribute('data-label', 'File Type');
 		const icon = documentTable.createItemIcon(_item.extension);
 		td.appendChild(icon);
+
 		return td;
 	},
 	clickOnAFolderEvent: (_item: any) => {
 		documentTableServices.updateFolderDirectoryInQueryString(_item.name);
 		let clickedFolderData: any = documentTableServices.searchFolderById(documentTableServices.getRootFolderData(), _item.id);
+		console.log('clickedFolderData', clickedFolderData);
 		documentTableServices.setFolderDirectoryToBrowserStorage(JSON.stringify(clickedFolderData));
 		documentTable.renderTableData(clickedFolderData);
 	},
@@ -159,6 +151,7 @@ const documentTable = {
 		let td = document.createElement('td');
 		td.setAttribute('class', 'item-name');
 		td.setAttribute('data-label', 'Name');
+
 		// a file
 		if (_item.extension !== undefined) {
 			if (_item.extension !== '') {
@@ -175,6 +168,7 @@ const documentTable = {
 				documentTable.clickOnAFolderEvent(_item);
 			});
 		}
+
 		return td;
 	},
 	renderItemModifiedTimeData: (_item: any) => {
@@ -183,6 +177,7 @@ const documentTable = {
 		td.setAttribute('class', 'modified-time');
 		td.setAttribute('data-label', 'Modified');
 		td.innerHTML = `${_item.modifiedTime}`;
+
 		return td;
 	},
 	renderItemModifiedByData: (_item: any) => {
@@ -191,6 +186,7 @@ const documentTable = {
 		td.setAttribute('class', 'modified-by');
 		td.setAttribute('data-label', 'Modified By');
 		td.innerHTML = `${_item.modifiedBy}`;
+
 		return td;
 	},
 	renderTableRowData: (_item: any) => {
@@ -227,6 +223,10 @@ const documentTable = {
 	},
 	loadTableData: () => {
 		let currentFolderData = documentTableServices.getCurrentFolderData();
+		// if current directory is root, update the query and add a key - value pair
+		if (documentTableServices.isRootFolder(currentFolderData) === true) {
+			documentTableServices.setFolderDirectoryToBrowserStorage(JSON.stringify(currentFolderData));
+		}
 		documentTable.renderTableData(currentFolderData);
 	},
 	loadTableEvents: () => {

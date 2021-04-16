@@ -286,7 +286,8 @@ const documentTable = {
   itemType: {
     folder: 'folder',
     file: 'file'
-  }
+  },
+  rootDirectory: 'root'
 };
 /* harmony default export */ __webpack_exports__["default"] = (documentTable);
 
@@ -327,8 +328,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _classes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/_index */ "./src/scripts/classes/_index.ts");
 /* harmony import */ var _constant_document_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constant/document-table */ "./src/scripts/constant/document-table.ts");
 /* harmony import */ var _services_document_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/document-table */ "./src/scripts/services/document-table.ts");
-/* harmony import */ var _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constant/item-icon-css-class */ "./src/scripts/constant/item-icon-css-class.ts");
-
 
 
 
@@ -425,7 +424,8 @@ const documentTable = {
       }
 
       currentFolderData = _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].addNewItemToCurrentFolderInRootData(_services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].getRootFolderData(), currentFolderData.id, item);
-      documentTable.renderTableData(currentFolderData);
+      console.log('currentFolderData after saved: ', currentFolderData);
+      documentTable.renderTableData(currentFolderData); // we also need to update the current folder's sub-folders and files data in browser storage/database:
     });
   },
   loadMenuBarEvents: () => {
@@ -434,35 +434,8 @@ const documentTable = {
   },
   createItemIcon: _extension => {
     const icon = document.createElement('i');
-
-    if (_extension !== undefined) {
-      switch (_extension) {
-        case 'txt':
-          icon.setAttribute('class', _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].text);
-          break;
-
-        case 'doc':
-        case 'docx':
-          icon.setAttribute('class', _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].word);
-          break;
-
-        case 'xml':
-        case 'csv':
-        case 'xlsx':
-          icon.setAttribute('class', _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].excel);
-          break;
-
-        case 'exe':
-          icon.setAttribute('class', _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].program);
-          break;
-
-        default:
-          icon.setAttribute('class', _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].file);
-      }
-    } else {
-      icon.setAttribute('class', _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].folder);
-    }
-
+    const iconCSSClass = _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].getItemIconCSSClass(_extension);
+    icon.setAttribute('class', iconCSSClass);
     return icon;
   },
   renderItemTypeData: _item => {
@@ -477,6 +450,7 @@ const documentTable = {
   clickOnAFolderEvent: _item => {
     _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].updateFolderDirectoryInQueryString(_item.name);
     let clickedFolderData = _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].searchFolderById(_services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].getRootFolderData(), _item.id);
+    console.log('clickedFolderData', clickedFolderData);
     _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].setFolderDirectoryToBrowserStorage(JSON.stringify(clickedFolderData));
     documentTable.renderTableData(clickedFolderData);
   },
@@ -545,7 +519,12 @@ const documentTable = {
     documentTable.displayItems(folderData.fileItems);
   },
   loadTableData: () => {
-    let currentFolderData = _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].getCurrentFolderData();
+    let currentFolderData = _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].getCurrentFolderData(); // if current directory is root, update the query and add a key - value pair
+
+    if (_services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].isRootFolder(currentFolderData) === true) {
+      _services_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].setFolderDirectoryToBrowserStorage(JSON.stringify(currentFolderData));
+    }
+
     documentTable.renderTableData(currentFolderData);
   },
   loadTableEvents: () => {
@@ -689,6 +668,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _page_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./page-services */ "./src/scripts/services/page-services.ts");
 /* harmony import */ var _sample_data_sample_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sample-data/sample-data */ "./src/scripts/sample-data/sample-data.ts");
 /* harmony import */ var _constant_document_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constant/document-table */ "./src/scripts/constant/document-table.ts");
+/* harmony import */ var _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constant/item-icon-css-class */ "./src/scripts/constant/item-icon-css-class.ts");
+
 
 
 
@@ -696,8 +677,8 @@ const documentTableServices = {
   getFolderDirectoryFromQueryString: () => {
     const folderDirectory = _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].getURLParams('directory');
 
-    if (folderDirectory === null || folderDirectory === 'root') {
-      return 'root';
+    if (folderDirectory === null || documentTableServices.isRootDirectory(folderDirectory)) {
+      return _constant_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].rootDirectory;
     }
 
     return folderDirectory;
@@ -708,22 +689,63 @@ const documentTableServices = {
   getRootFolderData: () => {
     return _sample_data_sample_data__WEBPACK_IMPORTED_MODULE_1__["default"];
   },
-  getCurrentFolderData: () => {
-    const folderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
+  isRootFolder: _folderData => {
+    if (_folderData.id === _sample_data_sample_data__WEBPACK_IMPORTED_MODULE_1__["default"].id) {
+      return true;
+    }
 
-    if (folderDirectory === 'root') {
+    return false;
+  },
+  isRootDirectory: _folderDirectory => {
+    if (_folderDirectory === _constant_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].rootDirectory) {
+      return true;
+    }
+
+    return false;
+  },
+  getCurrentFolderData: () => {
+    const currentFolderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
+
+    if (documentTableServices.isRootDirectory(currentFolderDirectory)) {
       return _sample_data_sample_data__WEBPACK_IMPORTED_MODULE_1__["default"];
     }
 
-    return _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].getFolderDataFromBrowserStorage(folderDirectory);
+    return _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].getFolderDataFromBrowserStorage(currentFolderDirectory);
   },
-  updateFolderDirectoryInQueryString: _directoryName => {
-    const folderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
-    const newFolderDirectory = `${folderDirectory}/${_directoryName}`;
+  getItemIconCSSClass: _extension => {
+    if (_extension !== undefined) {
+      switch (_extension) {
+        case 'txt':
+          return _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].text;
+
+        case 'doc':
+        case 'docx':
+          return _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].word;
+
+        case 'xml':
+        case 'csv':
+        case 'xlsx':
+          return _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].excel;
+
+        case 'exe':
+          return _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].program;
+
+        default:
+          return _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].file;
+      }
+    } else {
+      return _constant_item_icon_css_class__WEBPACK_IMPORTED_MODULE_3__["default"].folder;
+    }
+  },
+  updateFolderDirectoryInQueryString: (_directoryName = _constant_document_table__WEBPACK_IMPORTED_MODULE_2__["default"].rootDirectory) => {
+    const currentFolderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
+    const newFolderDirectory = `${currentFolderDirectory}/${_directoryName}`;
     window.history.pushState(null, null, `?directory=${newFolderDirectory}`);
   },
+  // thêm một key (directory) - value (folder data) với folder directory hiện tại
   setFolderDirectoryToBrowserStorage: _folderData => {
     const currentFolderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
+    console.log('currentFolderDirectory: ', currentFolderDirectory);
     _page_services__WEBPACK_IMPORTED_MODULE_0__["default"].setDataToBrowserStorage(currentFolderDirectory, _folderData);
   },
   addNewItemToCurrentFolderInRootData: (_folderData, _folderId, _newItemData) => {

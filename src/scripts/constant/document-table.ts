@@ -3,6 +3,7 @@ const documentTable = {
     folder: 'folder',
     file: 'file',
   },
+  rootDirectory: 'root',
 };
 
 export default documentTable;
