@@ -30,6 +30,8 @@ AS
 	WHERE movie.year = @year AND gerne.genre = @movieGenre AND role like '%self'
 GO
 
+SET STATISTICS IO ON;
+SET STATISTICS TIME ON;
 EXECUTE getMovieDetails 2004, 'Short';
 
 SELECT year, count(name)
