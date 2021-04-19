@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Training.Database;
 using Training.Models;
 
 namespace Training.Controllers
@@ -13,9 +14,9 @@ namespace Training.Controllers
     [ApiController]
     public class FilesController : ControllerBase
     {
-        private readonly ItemContext _context;
+        private readonly DatabaseContext _context;
 
-        public FilesController(ItemContext context)
+        public FilesController(DatabaseContext context)
         {
             _context = context;
         }
@@ -24,6 +25,43 @@ namespace Training.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<File>>> GetFile()
         {
+            var fileList = _context.Item.Join(
+            _context.File,
+            item => item.Id,
+            file => file.Id,
+            (item, file) => new
+            {
+                FileId = item.Id,
+                FileName = item.Name,
+                FileExtension = file.Extension,
+                CreatedTime = item.CreatedTime,
+                CreatedBy = item.CreatedBy,
+                ModifiedTime = item.ModifiedTime,
+                ModifiedBy = item.ModifiedBy,
+                ParentFolderId = item.ParentFolderId
+            }).Where(item => item.ParentFolderId == "folder-000002");
+
+            var folderList = _context.Item.Join(
+                _context.Folder,
+                item => item.Id,
+                folder => folder.Id,
+                (item, folder) => new
+                {
+                    FileId = item.Id,
+                    FolderName = item.Name,
+                    ParentFolderId = item.ParentFolderId
+                }).Where(item => item.ParentFolderId == "folder-root" && item.FolderName != "folder-root");
+
+            foreach (var _file in fileList)
+            {
+                Console.WriteLine(_file.FileName);
+            }
+
+            foreach (var _folder in folderList)
+            {
+                Console.WriteLine(_folder.FolderName);
+            }
+
             return await _context.File.ToListAsync();
         }
 

@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Training.Models;
+using Training.Database;
 
 namespace Training
 {
@@ -34,8 +35,7 @@ namespace Training
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
-            services.AddDbContext<ItemContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ApplicationDatabase")));
-            //services.AddDbContext<FolderContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("PrecioFishboneTrainingProjectDatabase")));
+            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ApplicationDatabase")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

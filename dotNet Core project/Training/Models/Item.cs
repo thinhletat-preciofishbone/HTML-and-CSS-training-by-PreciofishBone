@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Training.Models
 {
-    public abstract class Item
+    public class Item
     {
         public string Id { get; set; }
         public string Name { get; set; }

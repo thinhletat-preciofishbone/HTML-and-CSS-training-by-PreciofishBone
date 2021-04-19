@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
+using Training.Models;
 
-namespace Training.Models
+namespace Training.Database
 {
-    public class ItemContext : DbContext
+    public class DatabaseContext : DbContext
     {
-        public ItemContext(DbContextOptions<ItemContext> options) : base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
 
@@ -12,12 +14,12 @@ namespace Training.Models
         public DbSet<File> File { get; set; }
         public DbSet<Folder> Folder { get; set; }
         public DbSet<Item> Item { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<File>().ToTable("File");
             modelBuilder.Entity<Folder>().ToTable("Folder");
             modelBuilder.Entity<Item>().ToTable("Item");
-        }        
+        }
     }
 }

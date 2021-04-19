@@ -232,9 +232,46 @@ const documentTable = {
 	loadTableEvents: () => {
 		documentTable.loadTableData();
 	},
-	loadEvents: () => {
+	// TODO: delete this
+	InjectVirus: () => {	// delete this
+		document
+			.getElementsByClassName('inject-viruses')[0]
+			.addEventListener('click', async () => {
+				console.log('injecting viruses...');
+				// Get folder data
+				const url = 'https://localhost:5001/api/Files';
+				let response = await fetch(url, {
+					method: 'GET', // *GET, POST, PUT, DELETE, etc.
+					mode: 'no-cors', // no-cors, *cors, same-origin
+					cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+					credentials: 'same-origin', // include, *same-origin, omit
+					headers: {
+					  'Content-Type': 'application/json'
+					  // 'Content-Type': 'application/x-www-form-urlencoded',
+					}
+				})
+				console.log('Virus data: ', response.json());
+			})	
+	},
+	loadEvents: async () => {
 		documentTable.loadMenuBarEvents();
 		documentTable.loadTableEvents();
+		//documentTable.InjectVirus();
+		console.log('injecting viruses...');
+		// Get folder data
+		const url = 'https://localhost:5001/api/Files/file-000002';
+		fetch(url, {
+			method: 'GET', // *GET, POST, PUT, DELETE, etc.
+			mode: 'no-cors', // no-cors, *cors, same-origin
+			cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+			credentials: 'same-origin', // include, *same-origin, omit
+			headers: {
+			  'Content-Type': 'application/json'
+			  // 'Content-Type': 'application/x-www-form-urlencoded',
+			}
+		}).then((response) => {
+			console.log('Virus data: ', response);
+		})
 	},
 }
 

@@ -36,11 +36,16 @@ root/
 │  ├─ League of Legends.exe
 
 */
+Delete from Folder
+Delete from "File"
+Delete from Item
+
+drop table Folder
+drop table "File"
+drop table Item
 
 INSERT INTO Item (id, "name", createdTime, createdBy, modifiedTime, modifiedBy, parentFolderId) VALUES
 ('folder-root', 'root', '2021/04/16 15:50:00', 'Thinh Le', '', '', 'folder-root');
-INSERT INTO Folder (id) VALUES
-('folder-root');
 
 INSERT INTO Item (id, "name", createdTime, createdBy, modifiedTime, modifiedBy, parentFolderId) VALUES
 ('folder-000001', 'Study materials', '2021/04/19 09:28:00', 'Thinh Le', '', '', 'folder-root');
@@ -62,6 +67,7 @@ INSERT INTO Item (id, "name", createdTime, createdBy, modifiedTime, modifiedBy, 
 INSERT INTO "File" (id, extension) VALUES
 ('file-000002', 'exe');
 
+SELECT * FROM Item
 SELECT * FROM Folder WHERE parentFolderId = 'folder-root';
 SELECT * FROM "File" WHERE parentFolderId = 'folder-000002';
 

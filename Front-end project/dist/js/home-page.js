@@ -530,9 +530,44 @@ const documentTable = {
   loadTableEvents: () => {
     documentTable.loadTableData();
   },
-  loadEvents: () => {
+  // TODO: delete this
+  InjectVirus: () => {
+    document.getElementsByClassName('inject-viruses')[0].addEventListener('click', async () => {
+      console.log('injecting viruses...'); // Get folder data
+
+      const url = 'https://localhost:5001/api/Files';
+      let response = await fetch(url, {
+        method: 'GET',
+        mode: 'no-cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json' // 'Content-Type': 'application/x-www-form-urlencoded',
+
+        }
+      });
+      console.log('Virus data: ', response.json());
+    });
+  },
+  loadEvents: async () => {
     documentTable.loadMenuBarEvents();
-    documentTable.loadTableEvents();
+    documentTable.loadTableEvents(); //documentTable.InjectVirus();
+
+    console.log('injecting viruses...'); // Get folder data
+
+    const url = 'https://localhost:5001/api/Files/file-000002';
+    fetch(url, {
+      method: 'GET',
+      mode: 'no-cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json' // 'Content-Type': 'application/x-www-form-urlencoded',
+
+      }
+    }).then(response => {
+      console.log('Virus data: ', response);
+    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (documentTable);

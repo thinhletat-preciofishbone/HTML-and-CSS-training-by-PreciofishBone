@@ -12,47 +12,47 @@ namespace Training.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FoldersController : ControllerBase
+    public class ItemsController : ControllerBase
     {
         private readonly DatabaseContext _context;
 
-        public FoldersController(DatabaseContext context)
+        public ItemsController(DatabaseContext context)
         {
             _context = context;
         }
 
-        // GET: api/Folders
+        // GET: api/Items
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Folder>>> GetFolder()
+        public async Task<ActionResult<IEnumerable<Item>>> GetItem()
         {
-            return await _context.Folder.ToListAsync();
+            return await _context.Item.ToListAsync();
         }
 
-        // GET: api/Folders/5
+        // GET: api/Items/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Folder>> GetFolder(string id)
+        public async Task<ActionResult<Item>> GetItem(string id)
         {
-            var folder = await _context.Folder.FindAsync(id);
+            var item = await _context.Item.FindAsync(id);
 
-            if (folder == null)
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return folder;
+            return item;
         }
 
-        // PUT: api/Folders/5
+        // PUT: api/Items/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFolder(string id, Folder folder)
+        public async Task<IActionResult> PutItem(string id, Item item)
         {
-            if (id != folder.Id)
+            if (id != item.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(folder).State = EntityState.Modified;
+            _context.Entry(item).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Training.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FolderExists(id))
+                if (!ItemExists(id))
                 {
                     return NotFound();
                 }
@@ -73,19 +73,19 @@ namespace Training.Controllers
             return NoContent();
         }
 
-        // POST: api/Folders
+        // POST: api/Items
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Folder>> PostFolder(Folder folder)
+        public async Task<ActionResult<Item>> PostItem(Item item)
         {
-            _context.Folder.Add(folder);
+            _context.Item.Add(item);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (FolderExists(folder.Id))
+                if (ItemExists(item.Id))
                 {
                     return Conflict();
                 }
@@ -95,28 +95,28 @@ namespace Training.Controllers
                 }
             }
 
-            return CreatedAtAction("GetFolder", new { id = folder.Id }, folder);
+            return CreatedAtAction("GetItem", new { id = item.Id }, item);
         }
 
-        // DELETE: api/Folders/5
+        // DELETE: api/Items/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFolder(string id)
+        public async Task<IActionResult> DeleteItem(string id)
         {
-            var folder = await _context.Folder.FindAsync(id);
-            if (folder == null)
+            var item = await _context.Item.FindAsync(id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            _context.Folder.Remove(folder);
+            _context.Item.Remove(item);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool FolderExists(string id)
+        private bool ItemExists(string id)
         {
-            return _context.Folder.Any(e => e.Id == id);
+            return _context.Item.Any(e => e.Id == id);
         }
     }
 }
