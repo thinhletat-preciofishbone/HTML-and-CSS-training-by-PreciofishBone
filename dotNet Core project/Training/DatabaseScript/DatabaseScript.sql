@@ -34,6 +34,7 @@ root/
 ├─ Games/
 │  ├─ README.txt
 │  ├─ League of Legends.exe
+│  Log.txt
 
 */
 Delete from Folder
@@ -66,6 +67,16 @@ INSERT INTO Item (id, "name", createdTime, createdBy, modifiedTime, modifiedBy, 
 ('file-000002', 'League of Legends', '2021/04/19 09:30:55', 'Thinh Le', '', '', 'folder-000002');
 INSERT INTO "File" (id, extension) VALUES
 ('file-000002', 'exe');
+
+INSERT INTO Item (id, "name", createdTime, createdBy, modifiedTime, modifiedBy, parentFolderId) VALUES
+('file-000003', 'Log', '2021/04/20 10:04:00', 'Thinh Le', '', '', 'folder-root');
+INSERT INTO "File" (id, extension) VALUES
+('file-000003', 'txt');
+
+INSERT INTO Item (id, "name", createdTime, createdBy, modifiedTime, modifiedBy, parentFolderId) VALUES
+('file-000004', 'Trash file', '2021/04/20 10:32:00', 'Thinh Le', '', 'Thinh Le', 'folder-root');
+INSERT INTO "File" (id, extension) VALUES
+('file-000004', '');
 
 SELECT * FROM Item
 SELECT * FROM Folder WHERE parentFolderId = 'folder-root';

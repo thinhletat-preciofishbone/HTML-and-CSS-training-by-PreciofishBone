@@ -125,19 +125,26 @@ const documentTableConstants = {
 		folder: 'folder',
 		file: 'file',
 	},
-	rootFolder: 'root',
-	rootFolderId: 'root',
-};
-
-const itemIconCSSClasses = {
-	folder: 'bi bi-folder',
-	text: 'bi bi-journal-text',
-	word: 'bi bi-file-earmark-word-fill word-icon',
-	excel: 'bi bi-file-earmark-spreadsheet-fill excel-icon',
-	powerPoint: 'bi bi-file-earmark-ppt-fill power-point-icon',
-	oneNote: 'bi bi-journal-bookmark-fill one-note-icon',
-	program: 'bi bi-gear-fill program-icon',
-	file: 'bi bi-file',
+	rootFolderDirectory: 'root',
+	rootFolderId: 'folder-root',
+	itemIconCSSClasses: {
+		folder: 'bi bi-folder',
+		text: 'bi bi-journal-text',
+		word: 'bi bi-file-earmark-word-fill word-icon',
+		excel: 'bi bi-file-earmark-spreadsheet-fill excel-icon',
+		powerPoint: 'bi bi-file-earmark-ppt-fill power-point-icon',
+		oneNote: 'bi bi-journal-bookmark-fill one-note-icon',
+		program: 'bi bi-gear-fill program-icon',
+		file: 'bi bi-file',
+	},
+	APIEndpoints: {
+		GetFoldersFromParentFolder: '/api/Items/GetFoldersFromParentFolder/',
+		GetFilesFromParentFolder: '/api/Items/GetFilesFromParentFolder/',
+		GetFilesAndFoldersFromParentFolder: '/api/Items/GetFilesAndFoldersFromParentFolder/'
+	},
+	APIStatus: {
+		success: 'success'
+    }
 };
 
 const pageServices = {
@@ -148,22 +155,47 @@ const pageServices = {
 	getFolderDataFromBrowserStorage: (_key) => {
 		return JSON.parse(window.localStorage.getItem(_key));
 	},
-	setDataToBrowserStorage: (_key, _value) => {
-		return window.localStorage.setItem(_key, _value);
+	setBrowserStorageData: (_key, _value) => {
+		window.localStorage.setItem(_key, _value);
 	},
 };
 
 const documentTableServices = {
+	// using
+	setBrowserStorageData: (_key, _value) => {
+		pageServices.setBrowserStorageData(_key, _value);
+    },
+	// using
+	fetchDataFromAPI: async (_APIendpoint) => {
+		return await fetch(_APIendpoint).then((_response) => {
+			if (!_response.ok) {
+				console.log('Response status is NOT ok!')
+				return null
+			}
+			return _response.json()
+		});
+	},
+	// using
 	getFolderDirectoryFromQueryString: () => {
 		const folderDirectory = pageServices.getURLParams('directory');
-		if (
-			folderDirectory === null ||
-			documentTableServices.isRootDirectory(folderDirectory)
-		) {
-			return documentTableConstants.rootFolder;
+		if (folderDirectory === null) {
+			return null;
 		}
 		return folderDirectory;
 	},
+	// using
+	isRootFolderDirectory: () => {
+		let folderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
+		if (folderDirectory === null || folderDirectory === documentTableConstants.rootFolderDirectory) {
+			console.log('You are currently in the root folder');
+			return true;
+		}
+		console.log(`You are currently in the ${folderDirectory} folder`);
+		return false;
+    },
+	GetTableDataFromBrowerStorage: (_key) => {
+
+    },
 	getFolderIdFromBrowserStorage: (_folderDirectory) => {
 		return pageServices.getFolderDataFromBrowserStorage(
 			_folderDirectory,
@@ -179,50 +211,49 @@ const documentTableServices = {
 		return false;
 	},
 	isRootDirectory: (_folderDirectory) => {
-		if (_folderDirectory === documentTableConstants.rootFolder) {
+		if (_folderDirectory === documentTableConstants.rootFolderDirectory) {
 			return true;
 		}
 		return false;
 	},
-	getCurrentFolderData: (_folderId = documentTableConstants.rootFolderId) => {
+	getCurrentFolderData: (_parentFolderId = documentTableConstants.rootFolderId) => {
 		const currentFolderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
 		// If it is root, return the root folder data
 		if (documentTableServices.isRootDirectory(currentFolderDirectory)) {
-			// get current folder's folder data
-			$.get(`api/Files/${folderId}`, function (data, status) {
+			// get current folder' files and folders
+			let data;
+			$.get(documentTableConstants.APIEndpoints.GetFilesAndFoldersFromParentFolder + _parentFolderId, function (_data, status) {
+				data = _data
 			});
-			// get current folder's file data
-			$.get(`api/Files/${folderId}`, function (data, status) {
-			});
+			return data;
 		}
 		return pageServices.getFolderDataFromBrowserStorage(
 			currentFolderDirectory,
 		);
 	},
+	// using
 	getItemIconCSSClass: (_extension) => {
-		if (_extension !== undefined) {
+		if (_extension !== null) {
 			switch (_extension) {
 				case 'txt':
-					return itemIconCSSClasses.text;
+					return documentTableConstants.itemIconCSSClasses.text;
 				case 'doc':
 				case 'docx':
-					return itemIconCSSClasses.word;
+					return documentTableConstants.itemIconCSSClasses.word;
 				case 'xml':
 				case 'csv':
 				case 'xlsx':
-					return itemIconCSSClasses.excel;
+					return documentTableConstants.itemIconCSSClasses.excel;
 				case 'exe':
-					return itemIconCSSClasses.program;
+					return documentTableConstants.itemIconCSSClasses.program;
 				default:
-					return itemIconCSSClasses.file;
+					return documentTableConstants.itemIconCSSClasses.file;
 			}
 		} else {
-			return itemIconCSSClasses.folder;
+			return documentTableConstants.itemIconCSSClasses.folder;
 		}
 	},
-	updateFolderDirectoryInQueryString: (
-		_directoryName = documentTableConstants.rootFolder,
-	) => {
+	updateFolderDirectoryInQueryString: (_directoryName = documentTableConstants.rootFolderDirectory) => {
 		const currentFolderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
 		const newFolderDirectory = `${currentFolderDirectory}/${_directoryName}`;
 		window.history.pushState(
@@ -235,7 +266,7 @@ const documentTableServices = {
 	setFolderDirectoryToBrowserStorage: (_folderData) => {
 		const currentFolderDirectory = documentTableServices.getFolderDirectoryFromQueryString();
 		console.log('currentFolderDirectory: ', currentFolderDirectory);
-		pageServices.setDataToBrowserStorage(
+		pageServices.setBrowserStorageData(
 			currentFolderDirectory,
 			_folderData,
 		);
@@ -246,9 +277,7 @@ const documentTableServices = {
 		_newItemData,
 	) => {
 		if (_folderData.id === _folderId) {
-			if (
-				(_newItemData.type = documentTableConstants.itemType.folder)
-			) {
+			if ((_newItemData.type = documentTableConstants.itemType.folder)) {
 				_folderData.subFolderItems.push(_newItemData);
 			} else {
 				_folderData.fileItems.push(_newItemData);
@@ -405,7 +434,7 @@ const documentTable = {
 
 				currentFolderData = documentTableServices.addNewItemToCurrentFolderInRootData(documentTableServices.getRootFolderData(), currentFolderData.id, item);
 				console.log('currentFolderData after saved: ', currentFolderData);
-				documentTable.renderTableData(currentFolderData);
+				documentTable.GetTableData(currentFolderData);
 
 				// we also need to update the current folder's sub-folders and files data in browser storage/database:
 
@@ -414,6 +443,10 @@ const documentTable = {
 	loadMenuBarEvents: () => {
 		documentTable.createANewItemEvent();
 		documentTable.saveANewItemEvent();
+	},
+	setBrowserStorageData: (_folderDirectory, _folderId) => {
+		// Key<Path>: Value<parent folder id>
+		documentTableServices.setBrowserStorageData(_folderDirectory, _folderId);
 	},
 	createItemIcon: (_extension) => {
 		const icon = document.createElement('i');
@@ -427,17 +460,31 @@ const documentTable = {
 		let td = document.createElement('td');
 		td.setAttribute('class', 'item-type');
 		td.setAttribute('data-label', 'File Type');
-		const icon = documentTable.createItemIcon(_item.extension);
+		const icon = documentTable.createItemIcon(_item.fileExtension);
 		td.appendChild(icon);
 
 		return td;
 	},
-	clickOnAFolderEvent: (_item) => {
+	clickOnFolderEvent: async (_asd) => {
+		/*
 		documentTableServices.updateFolderDirectoryInQueryString(_item.name);
 		let clickedFolderData = documentTableServices.searchFolderById(documentTableServices.getRootFolderData(), _item.id);
 		console.log('clickedFolderData', clickedFolderData);
 		documentTableServices.setFolderDirectoryToBrowserStorage(JSON.stringify(clickedFolderData));
-		documentTable.renderTableData(clickedFolderData);
+		documentTable.GetTableData(clickedFolderData);
+		*/
+
+		// Get clicked folder Id
+		let folderId = event.target.getAttribute('data-id')
+
+		// Update the query string
+
+
+		// Get clicked folder data
+		let tableData = await documentTable.GetTableData(folderId);
+
+		// Render clicked folder
+		documentTable.renderTableData(tableData);
 	},
 	renderItemNameData: (_item) => {
 		// item type
@@ -446,19 +493,19 @@ const documentTable = {
 		td.setAttribute('data-label', 'Name');
 
 		// a file
-		if (_item.extension !== undefined) {
-			if (_item.extension !== '') {
-				td.innerHTML = `${_item.name}.${_item.extension}`;
+		if (_item.fileExtension !== null) {
+			if (_item.fileExtension !== '') {
+				td.innerHTML = `${_item.itemData.name}.${_item.fileExtension}`;
 			} else {
-				td.innerHTML = `${_item.name}`;
+				td.innerHTML = `${_item.itemData.name}`;
 			}
 		} else {
 			// a folder
 			td.className += ' folder-item';
-			td.innerHTML = `${_item.name}`;
-			td.setAttribute('data-id', _item.id);
-			td.addEventListener('click', () => {
-				documentTable.clickOnAFolderEvent(_item);
+			td.innerHTML = `${_item.itemData.name}`;
+			td.setAttribute('data-id', _item.itemData.id);
+			td.addEventListener('click', (event) => {
+				documentTable.clickOnFolderEvent(event);
 			});
 		}
 
@@ -469,7 +516,7 @@ const documentTable = {
 		let td = document.createElement('td');
 		td.setAttribute('class', 'modified-time');
 		td.setAttribute('data-label', 'Modified');
-		td.innerHTML = `${_item.modifiedTime}`;
+		td.innerHTML = `${_item.itemData.modifiedTime}`;
 
 		return td;
 	},
@@ -478,11 +525,12 @@ const documentTable = {
 		let td = document.createElement('td');
 		td.setAttribute('class', 'modified-by');
 		td.setAttribute('data-label', 'Modified By');
-		td.innerHTML = `${_item.modifiedBy}`;
+		td.innerHTML = `${_item.itemData.modifiedBy}`;
 
 		return td;
 	},
-	renderTableRowData: (_item) => {
+	displayItems: (_item) => {
+		console.log(`${_item.itemData.name} (${_item.itemData.id})`);
 		const tbody = document
 			.getElementsByClassName('document-table')[0]
 			.getElementsByTagName('tbody')[0];
@@ -496,37 +544,46 @@ const documentTable = {
 		tr.appendChild(td);
 		tbody.appendChild(tr);
 	},
-	displayItems: (_itemList) => {
-		for (
-			let itemIndex = 0;
-			itemIndex < _itemList.length;
-			itemIndex += 1
-		) {
-			documentTable.renderTableRowData(_itemList[itemIndex]);
+	renderTableData: (_tableData) => {
+		if (_tableData !== null) {
+			console.log('Data recieved from API: ', _tableData);
+			// For each element in the table's data, display them on UI
+			_tableData.forEach(documentTable.displayItems)
+		}
+		else {
+			// TODO: display an error page?
 		}
 	},
-	renderTableData: (folderData) => {
-		// Find tbody element
-		const tbody = document
-			.getElementsByClassName('document-table')[0]
-			.getElementsByTagName('tbody')[0];
-		tbody.innerHTML = '';
-		documentTable.displayItems(folderData.subFolderItems);
-		documentTable.displayItems(folderData.fileItems);
-	},
-	loadTableData: () => {
-		let currentFolderData = documentTableServices.getCurrentFolderData();
-		// if current directory is root, update the query and add a key - value pair
-		if (documentTableServices.isRootFolder(currentFolderData) === true) {
-			documentTableServices.setFolderDirectoryToBrowserStorage(JSON.stringify(currentFolderData));
+	GetTableData: async (_parentFolderId = documentTableConstants.rootFolderId) => {
+		// Clear the current table data (if any):
+		const tbody = document.getElementsByClassName('document-table')[0]
+			.getElementsByTagName('tbody')[0].innerHTML = '';
+
+		// Call API to get current folder' files and folders
+		let APIEndpoint = documentTableConstants.APIEndpoints.GetFilesAndFoldersFromParentFolder + _parentFolderId;
+		let _tableData = await documentTableServices.fetchDataFromAPI(APIEndpoint);
+		if (_tableData !== null) {
+			return _tableData;
 		}
-		documentTable.renderTableData(currentFolderData);
+		else {
+			return null;
+        }
 	},
-	loadTableEvents: () => {
-		documentTable.loadTableData();
+	loadTableEvents: async () => {
+		let tableData = await documentTable.GetTableData();
+
+		// Render table data with data recieved from API
+		documentTable.renderTableData(tableData);
+
+		// Write data to browser storage (only with the root folder?)
+		if (documentTableServices.isRootFolderDirectory()) {
+			let rootFolderDirectory = documentTableConstants.rootFolderDirectory;
+			let rootFolderId = documentTableConstants.rootFolderId;
+			documentTable.setBrowserStorageData(rootFolderDirectory, rootFolderId);
+		}
 	},
 	loadEvents: () => {
-		documentTable.loadMenuBarEvents();
+		//documentTable.loadMenuBarEvents();
 		documentTable.loadTableEvents();
 	},
 }

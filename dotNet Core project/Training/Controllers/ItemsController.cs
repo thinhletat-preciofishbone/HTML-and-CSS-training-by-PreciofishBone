@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Training.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
+        const string rootFolderId = "folder-root";
         private readonly DatabaseContext _context;
 
         public ItemsController(DatabaseContext context)
@@ -42,6 +44,54 @@ namespace Training.Controllers
             return item;
         }
 
+        // GET: api/Items/GetItemsFromFolders/folder-root
+        [HttpGet("GetItemsFromFolders/{parentFolderId}")]
+        public async Task<ActionResult<Item>> GetFoldersFromParentFolder(string parentFolderId)
+        {
+            var folderList = await _context.Item.Join(
+                _context.Folder,
+                item => item.Id,
+                folder => folder.Id,
+                (item, folder) => new
+                {
+                    FolderId = item.Id,
+                    FolderName = item.Name,
+                    CreatedTime = item.CreatedTime,
+                    CreatedBy = item.CreatedBy,
+                    ModifiedTime = item.ModifiedTime,
+                    ModifiedBy = item.ModifiedBy,
+                    ParentFolderId = item.ParentFolderId
+                }).Where(result => result.ParentFolderId == "folder-root" && result.FolderName != "folder-root").ToListAsync();
+
+            if (folderList == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(folderList);
+        }
+
+        // GET: api/Items/GetFilesAndFoldersFromParentFolder/folder-root
+        [HttpGet("GetFilesAndFoldersFromParentFolder/{parentFolderId}")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetFilesAndFoldersFromParentFolder(string parentFolderId)
+        {
+            // order by ascending
+            var query2 = await (from itemData in _context.Item
+                                join file in _context.File on itemData.Id equals file.Id into newTable
+                                from newTableData in newTable.DefaultIfEmpty()
+                                where (itemData.ParentFolderId == parentFolderId) && (itemData.Id != rootFolderId)
+                                select new { itemData , fileExtension = newTableData.Extension })
+                                .OrderBy(newTableData => newTableData.fileExtension)
+                                .ToListAsync();
+
+            if (query2 == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(query2);
+        }
+        
         // PUT: api/Items/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
