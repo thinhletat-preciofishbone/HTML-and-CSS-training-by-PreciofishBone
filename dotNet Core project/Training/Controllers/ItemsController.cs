@@ -44,33 +44,6 @@ namespace Training.Controllers
             return item;
         }
 
-        // GET: api/Items/GetItemsFromFolders/folder-root
-        [HttpGet("GetItemsFromFolders/{parentFolderId}")]
-        public async Task<ActionResult<Item>> GetFoldersFromParentFolder(string parentFolderId)
-        {
-            var folderList = await _context.Item.Join(
-                _context.Folder,
-                item => item.Id,
-                folder => folder.Id,
-                (item, folder) => new
-                {
-                    FolderId = item.Id,
-                    FolderName = item.Name,
-                    CreatedTime = item.CreatedTime,
-                    CreatedBy = item.CreatedBy,
-                    ModifiedTime = item.ModifiedTime,
-                    ModifiedBy = item.ModifiedBy,
-                    ParentFolderId = item.ParentFolderId
-                }).Where(result => result.ParentFolderId == "folder-root" && result.FolderName != "folder-root").ToListAsync();
-
-            if (folderList == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(folderList);
-        }
-
         // GET: api/Items/GetFilesAndFoldersFromParentFolder/folder-root
         [HttpGet("GetFilesAndFoldersFromParentFolder/{parentFolderId}")]
         public async Task<ActionResult<IEnumerable<Object>>> GetFilesAndFoldersFromParentFolder(string parentFolderId)
@@ -128,6 +101,41 @@ namespace Training.Controllers
         [HttpPost]
         public async Task<ActionResult<Item>> PostItem(Item item)
         {
+            File f = new File();
+            _context.Item.Add(item);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (ItemExists(item.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtAction("GetItem", new { id = item.Id }, item);
+        }
+
+        [HttpPost("PostNewFile")]
+        public async Task<ActionResult<Item>> PostNewFile([FromBody] Item inputItem)
+        {
+            Item item = new()
+            {
+                Id = inputItem.Id,
+                Name = inputItem.Name,
+                CreatedTime = inputItem.CreatedTime,
+                CreatedBy = inputItem.CreatedBy,
+                ModifiedTime = inputItem.ModifiedTime,
+                ModifiedBy = inputItem.ModifiedBy,
+                ParentFolderId = inputItem.ParentFolderId
+            };
+
             _context.Item.Add(item);
             try
             {
