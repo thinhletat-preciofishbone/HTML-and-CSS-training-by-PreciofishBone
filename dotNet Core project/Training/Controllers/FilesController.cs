@@ -76,18 +76,18 @@ namespace Training.Controllers
         // POST: api/Files
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<File>> PostFile(File file)
+        public bool PostFile([FromBody] File file)
         {
             _context.File.Add(file);
             try
             {
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch (DbUpdateException)
             {
                 if (FileExists(file.Id))
                 {
-                    return Conflict();
+                    return false;
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace Training.Controllers
                 }
             }
 
-            return CreatedAtAction("GetFile", new { id = file.Id }, file);
+            return true;
         }
 
         // DELETE: api/Files/5

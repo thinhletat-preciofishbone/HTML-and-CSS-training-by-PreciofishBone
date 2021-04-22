@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -102,40 +103,6 @@ namespace Training.Controllers
         public async Task<ActionResult<Item>> PostItem(Item item)
         {
             File f = new File();
-            _context.Item.Add(item);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ItemExists(item.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetItem", new { id = item.Id }, item);
-        }
-
-        [HttpPost("PostNewFile")]
-        public async Task<ActionResult<Item>> PostNewFile([FromBody] Item inputItem)
-        {
-            Item item = new()
-            {
-                Id = inputItem.Id,
-                Name = inputItem.Name,
-                CreatedTime = inputItem.CreatedTime,
-                CreatedBy = inputItem.CreatedBy,
-                ModifiedTime = inputItem.ModifiedTime,
-                ModifiedBy = inputItem.ModifiedBy,
-                ParentFolderId = inputItem.ParentFolderId
-            };
-
             _context.Item.Add(item);
             try
             {

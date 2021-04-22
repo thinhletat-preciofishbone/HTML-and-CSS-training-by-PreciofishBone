@@ -17,6 +17,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Training.Models;
 using Training.Database;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Training
 {

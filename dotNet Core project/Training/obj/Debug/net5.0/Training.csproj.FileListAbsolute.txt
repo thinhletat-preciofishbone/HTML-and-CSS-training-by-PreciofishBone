@@ -285,3 +285,6 @@ C:\Users\thl3\Documents\Projects\Training-course-by-PrecioFishbone\dotNet Core p
 C:\Users\thl3\Documents\Projects\Training-course-by-PrecioFishbone\dotNet Core project\Training\obj\Debug\net5.0\ref\Training.dll
 C:\Users\thl3\Documents\Projects\Training-course-by-PrecioFishbone\dotNet Core project\Training\obj\Debug\net5.0\Training.pdb
 C:\Users\thl3\Documents\Projects\Training-course-by-PrecioFishbone\dotNet Core project\Training\obj\Debug\net5.0\Training.genruntimeconfig.cache
+C:\Users\thl3\Documents\Projects\Training-course-by-PrecioFishbone\dotNet Core project\Training\obj\Debug\net5.0\Training.csprojAssemblyReference.cache
+C:\Users\thl3\Documents\Projects\Training-course-by-PrecioFishbone\dotNet Core project\Training\bin\Debug\net5.0\Microsoft.Identity.Web.UI.Views.dll
+C:\Users\thl3\Documents\Projects\Training-course-by-PrecioFishbone\dotNet Core project\Training\bin\Debug\net5.0\Microsoft.Identity.Web.UI.dll

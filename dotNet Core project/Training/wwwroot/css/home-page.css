@@ -7773,19 +7773,19 @@ table th {
 }
 
 table.document-table colgroup col.item-type {
-  width: 7%;
+  width: 6%;
 }
 table.document-table colgroup col.item-name {
-  width: 30%;
+  width: 27%;
 }
 table.document-table colgroup col.modified-time {
-  width: 200px;
+  width: 250px;
 }
 table.document-table colgroup col.modified-by {
   width: 200px;
 }
 table.document-table colgroup col.add-new-column {
-  width: calc(100% - 7% - 30%)-400px;
+  width: calc(100% - 6% - 30%)-500px;
 }
 table.document-table th {
   border-top: transparent;
@@ -7822,7 +7822,7 @@ table.document-table tbody tr td.item-name {
   cursor: pointer;
 }
 table.document-table tbody tr td.add-new-column {
-  width: calc(100% - 7% - 30%)-400px;
+  width: calc(100% - 6% - 30%)-500px;
 }
 
 @media screen and (max-width: 992px) {

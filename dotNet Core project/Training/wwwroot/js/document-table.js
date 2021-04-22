@@ -21,11 +21,12 @@
 	},
 	APIEndpoints: {
 		GetFilesAndFoldersFromParentFolder: '/api/Items/GetFilesAndFoldersFromParentFolder/',
-		PostNewFile: '/api/Items/PostNewFile'
+		PostNewFolder: '/api/Folders',
+		PostNewFile: '/api/Files'
 	},
 	APIStatus: {
 		success: 'success'
-    }
+	}
 };
 
 const pageServices = {
@@ -54,7 +55,7 @@ const documentTableServices = {
 	// using
 	setBrowserStorageData: (_key, _value) => {
 		pageServices.setBrowserStorageData(_key, _value);
-    },
+	},
 	// using
 	fetchDataFromAPI: async (_APIendpoint, _method, _data = {}) => {
 		if (_method === documentTableConstants.fetchMethod.GET) {
@@ -67,6 +68,7 @@ const documentTableServices = {
 				return _response.json();
 			});
 		} else if (_method === documentTableConstants.fetchMethod.POST) {
+			console.log('POST?', _method);
 			return await fetch(_APIendpoint, {
 				method: _method, // *GET, POST, PUT, DELETE, etc.
 				mode: 'cors', // no-cors, *cors, same-origin
@@ -87,7 +89,7 @@ const documentTableServices = {
 				console.log('Response status: ', _response.status);
 				return _response.json();
 			});
-        }
+		}
 	},
 	// using
 	getQueryStringDirectory: () => {
@@ -118,44 +120,6 @@ const documentTableServices = {
 		}
 		console.log(`You are currently in the ${folderDirectory} folder`);
 		return false;
-    },
-	GetTableDataFromBrowerStorage: (_key) => {
-
-    },
-	getFolderIdFromBrowserStorage: (_folderDirectory) => {
-		return pageServices.getFolderDataFromBrowserStorage(
-			_folderDirectory,
-		);
-	},
-	getRootFolderData: () => {
-		return rootData;
-	},
-	isRootFolder: (_folderData) => {
-		if (_folderData.id === rootData.id) {
-			return true;
-		}
-		return false;
-	},
-	isRootDirectory: (_folderDirectory) => {
-		if (_folderDirectory === documentTableConstants.rootFolderDirectory) {
-			return true;
-		}
-		return false;
-	},
-	getCurrentFolderData: (_parentFolderId = documentTableConstants.rootFolderId) => {
-		const currentFolderDirectory = documentTableServices.getQueryStringDirectory();
-		// If it is root, return the root folder data
-		if (documentTableServices.isRootDirectory(currentFolderDirectory)) {
-			// get current folder' files and folders
-			let data;
-			$.get(documentTableConstants.APIEndpoints.GetFilesAndFoldersFromParentFolder + _parentFolderId, function (_data, status) {
-				data = _data
-			});
-			return data;
-		}
-		return pageServices.getFolderDataFromBrowserStorage(
-			currentFolderDirectory,
-		);
 	},
 	// using
 	getItemIconCSSClass: (_extension) => {
@@ -177,65 +141,6 @@ const documentTableServices = {
 			}
 		} else {
 			return documentTableConstants.itemIconCSSClasses.folder;
-		}
-	},
-	updateFolderDirectoryInQueryString: (_directoryName = documentTableConstants.rootFolderDirectory) => {
-		const currentFolderDirectory = documentTableServices.getQueryStringDirectory();
-		const newFolderDirectory = `${currentFolderDirectory}/${_directoryName}`;
-		window.history.pushState(
-			null,
-			null,
-			`?directory=${newFolderDirectory}`,
-		);
-	},
-	// thêm một key (directory) - value (folder data) với folder directory hiện tại
-	setFolderDirectoryToBrowserStorage: (_folderData) => {
-		const currentFolderDirectory = documentTableServices.getQueryStringDirectory();
-		console.log('currentFolderDirectory: ', currentFolderDirectory);
-		pageServices.setBrowserStorageData(
-			currentFolderDirectory,
-			_folderData,
-		);
-	},
-	addNewItemToCurrentFolderInRootData: (
-		_folderData,
-		_folderId,
-		_newItemData,
-	) => {
-		if (_folderData.id === _folderId) {
-			if ((_newItemData.type = documentTableConstants.itemType.folder)) {
-				_folderData.subFolderItems.push(_newItemData);
-			} else {
-				_folderData.fileItems.push(_newItemData);
-			}
-			return _folderData;
-		}
-		for (const child of _folderData.subFolderItems) {
-			const result = documentTableServices.addNewItemToCurrentFolderInRootData(
-				child,
-				_folderId,
-				_newItemData,
-			);
-			if (result) {
-				return result;
-			}
-		}
-	},
-	searchFolderById: (
-		_folderData,
-		_folderId = 'folder-root',
-	) => {
-		if (_folderData.id === _folderId) {
-			return _folderData;
-		}
-		for (const child of _folderData.subFolderItems) {
-			const result = documentTableServices.searchFolderById(
-				child,
-				_folderId,
-			);
-			if (result) {
-				return result;
-			}
 		}
 	},
 	makeTempId: (_length) => {
@@ -344,37 +249,51 @@ const documentTable = {
 		document
 			.getElementsByClassName('save-new-item')[0]
 			.addEventListener('click', async () => {
-				let currentFolderData = documentTableServices.getCurrentFolderData();
 				let itemInputData = documentTable.getItemInputData();
 				let newItemData = documentTable.setNewItemData(itemInputData);
-				let item = {
-					id: newItemData.id,
-					name: newItemData.name,
-					createdTime: new Date(),
-					createdBy: "Thinh Le",
-					modifiedTime: new Date(),
-					modifiedBy: "",
-					parentFolderId: "folder-root",
-					extension: newItemData.extension
-				};
 
-				let APIEndpoint = documentTableConstants.APIEndpoints.PostNewFile;
-				let fetchMethod = documentTableConstants.fetchMethod.POST;
-				await documentTableServices.fetchDataFromAPI(APIEndpoint, fetchMethod, item);
-				/*
+				// Get the current directory
+				let directory = documentTableServices.getQueryStringDirectory();
+
+				// get the directory' Id
+				let directoryId = documentTableServices.getBrowserStorageData(directory);
+
 				if (itemInputData.type === documentTableConstants.itemType.folder) {
-					// a folder
-					item = new classes.Folder(newItemData.id, newItemData.name);
+					let folder = {
+						"id": newItemData.id,
+						"name": newItemData.name,
+						"createdTime": new Date(),
+						"createdBy": 'Thinh Le',
+						"modifiedTime": new Date(),
+						"modifiedBy": '',
+						"parentFolderId": directoryId,
+					};
+
+					let APIEndpoint = documentTableConstants.APIEndpoints.PostNewFolder;
+					let fetchMethod = documentTableConstants.fetchMethod.POST;
+					await documentTableServices.fetchDataFromAPI(APIEndpoint, fetchMethod, folder);
 				} else {
-					item = new classes.File(newItemData.id, newItemData.name, newItemData.extension);
+					let file = {
+						"id": newItemData.id,
+						"name": newItemData.name,
+						"createdTime": new Date(),
+						"createdBy": 'Thinh Le',
+						"modifiedTime": new Date(),
+						"modifiedBy": '',
+						"parentFolderId": directoryId,
+						"extension": newItemData.extension
+					};
+
+					let APIEndpoint = documentTableConstants.APIEndpoints.PostNewFile;
+					let fetchMethod = documentTableConstants.fetchMethod.POST;
+					await documentTableServices.fetchDataFromAPI(APIEndpoint, fetchMethod, file);
 				}
-				*/
-				/*
-				currentFolderData = documentTableServices.addNewItemToCurrentFolderInRootData(documentTableServices.getRootFolderData(), currentFolderData.id, item);
-				console.log('currentFolderData after saved: ', currentFolderData);
-				documentTable.GetTableData(currentFolderData);
-				*/
-				// we also need to update the current folder's sub-folders and files data in browser storage/database:
+
+				// Get table data
+				let tableData = await documentTable.GetTableData(directoryId);
+
+				// Render table data with data recieved from API
+				documentTable.renderTableData(tableData);
 
 			});
 	},
@@ -414,8 +333,8 @@ const documentTable = {
 		} else {
 			newDirectory = `${currentDirectory}/${_newFolderName}`;
 		}
-		documentTableServices.setQueryStringFolderDirectory(newDirectory);		
-    },
+		documentTableServices.setQueryStringFolderDirectory(newDirectory);
+	},
 	renderItemNameData: (_item) => {
 		// item type
 		let td = document.createElement('td');
@@ -503,8 +422,8 @@ const documentTable = {
 
 			} else {
 				console.log('TODO: display an error page?')
-			// TODO: display an error page?
-            }
+				// TODO: display an error page?
+			}
 		}
 	},
 	GetTableData: async (_parentFolderId = documentTableConstants.rootFolderId) => {
@@ -521,7 +440,7 @@ const documentTable = {
 		}
 		else {
 			return null;
-        }
+		}
 	},
 	loadTableEvents: async () => {
 		// Write data to browser storage (only with the root folder?)

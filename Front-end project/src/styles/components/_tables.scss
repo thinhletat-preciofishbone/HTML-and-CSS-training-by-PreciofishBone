@@ -1,10 +1,10 @@
 // Table styles
 @import '../base/color';
 @import '../utilities/fonts';
-$document-table-file-type-column-width: 7%;
-$document-table-file-name-column-width: 30%;
-$document-table-modified-time-column-width: 200px;
-$document-table-modified-by-column-width: $document-table-modified-time-column-width;
+$document-table-file-type-column-width: 6%;
+$document-table-file-name-column-width: 27%;
+$document-table-modified-time-column-width: 250px;
+$document-table-modified-by-column-width: 200px;
 $document-table-add-new-col-column-width: calc(100% - #{$document-table-file-type-column-width} - #{$document-table-file-name-column-width}) - $document-table-modified-time-column-width*2;
 $document-table-border: 1px solid $border-light-color;
 table {
