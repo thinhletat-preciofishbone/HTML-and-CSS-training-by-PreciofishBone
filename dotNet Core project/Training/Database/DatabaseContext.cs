@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Training.Models;
+using Training.Services;
 
 namespace Training.Database
 {

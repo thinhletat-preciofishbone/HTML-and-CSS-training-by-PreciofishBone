@@ -20,6 +20,9 @@ using Training.Database;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Training.Services;
+using Training.Services.AbstractServices;
+using Training.Services.Interfaces;
 
 namespace Training
 {
@@ -39,7 +42,15 @@ namespace Training
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ApplicationDatabase")));
+
             services.AddControllers();
+
+            services.AddScoped<IItemServices, ItemServices>();
+            services.AddScoped<IFileServices, FileServices>();
+            services.AddScoped<IFolderServices, FolderServices>();
+            services.AddScoped<AItemDatabaseServices, ItemDatabaseServices>();
+            services.AddScoped<AFileDatabaseServices, FileDatabaseServices>();
+            services.AddScoped<AFolderDatabaseServices, FolderDatabaseServices>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Training", Version = "v1" });
@@ -65,10 +76,18 @@ namespace Training
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            /*
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            */
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "Default",
+                    pattern: "{Controller=Home}/{action = Index}/{id?}");
             });
         }
     }

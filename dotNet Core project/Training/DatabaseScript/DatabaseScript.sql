@@ -103,12 +103,13 @@ SELECT * FROM Folder WHERE parentFolderId = 'folder-root';
 SELECT * FROM "File" WHERE parentFolderId = 'folder-000002';
 
 
-
 INSERT INTO Item (id, "name", createdTime, createdBy, modifiedTime, modifiedBy, parentFolderId) VALUES
 ('filetest-0', 'test', '2021/04/20 15:02:00', 'Thinh Le', '', 'Thinh Le', 'folder-root');
 
 
-DELETE FROM Item where id like '%test%';
+DELETE FROM Folder where id like '%test%';
+DELETE FROM "File" where id like '%test%';
+DELETE FROM Item where id like '%tes%';
 
 
 

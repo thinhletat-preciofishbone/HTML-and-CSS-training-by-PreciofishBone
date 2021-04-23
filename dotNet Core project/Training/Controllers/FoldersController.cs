@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Training.Database;
 using Training.Models;
+using Training.Services.Interfaces;
 
 namespace Training.Controllers
 {
@@ -14,25 +15,25 @@ namespace Training.Controllers
     [ApiController]
     public class FoldersController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+        private readonly IFolderServices FolderServices;
 
-        public FoldersController(DatabaseContext context)
+        public FoldersController(IFolderServices _folderServices)
         {
-            _context = context;
+            FolderServices = _folderServices;
         }
 
         // GET: api/Folders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Folder>>> GetFolder()
+        public async Task<ActionResult<IEnumerable<Folder>>> GetAllFolders()
         {
-            return await _context.Folder.ToListAsync();
+            return await FolderServices.GetAllFolders();
         }
 
         // GET: api/Folders/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Folder>> GetFolder(string id)
         {
-            var folder = await _context.Folder.FindAsync(id);
+            var folder = await FolderServices.GetFolder(id);
 
             if (folder == null)
             {
@@ -45,78 +46,24 @@ namespace Training.Controllers
         // PUT: api/Folders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFolder(string id, Folder folder)
+        public async Task<Boolean> PutFolder(string id, Folder folder)
         {
-            if (id != folder.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(folder).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FolderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return await FolderServices.PutFolder(id, folder);
         }
 
         // POST: api/Folders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Folder>> PostFolder(Folder folder)
+        public async Task<Boolean> PostFolder(Folder folder)
         {
-            _context.Folder.Add(folder);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (FolderExists(folder.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetFolder", new { id = folder.Id }, folder);
+            return await FolderServices.PostFolder(folder);
         }
 
         // DELETE: api/Folders/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFolder(string id)
+        public async Task<Boolean> DeleteFolder(string id)
         {
-            var folder = await _context.Folder.FindAsync(id);
-            if (folder == null)
-            {
-                return NotFound();
-            }
-
-            _context.Folder.Remove(folder);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool FolderExists(string id)
-        {
-            return _context.Folder.Any(e => e.Id == id);
+            return await FolderServices.DeleteFolder(id);
         }
     }
 }

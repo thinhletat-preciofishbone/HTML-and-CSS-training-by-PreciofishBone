@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Training.Database;
 using Training.Models;
+using Training.Services.Interfaces;
 
 namespace Training.Controllers
 {
@@ -16,21 +15,28 @@ namespace Training.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        const string rootFolderId = "folder-root";
-        private readonly DatabaseContext _context;
+        private readonly IItemServices itemServices;
 
-        public ItemsController(DatabaseContext context)
+        public ItemsController(IItemServices _itemServices)
         {
-            _context = context;
+            this.itemServices = _itemServices;
         }
 
         // GET: api/Items
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Item>>> GetItem()
+        public Task<ActionResult<IEnumerable<Item>>> GetItem()
         {
-            return await _context.Item.ToListAsync();
+            return itemServices.GetAllItems();
         }
 
+        // GET: api/Items/GetFilesAndFoldersFromParentFolder/folder-root
+        [HttpGet("GetFilesAndFoldersFromParentFolder/{parentFolderId}")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetFilesAndFoldersFromParentFolder(string parentFolderId)
+        {
+            var result = await itemServices.GetFilesAndFoldersFromParentFolder(parentFolderId);
+            return result;
+        }
+        /*
         // GET: api/Items/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Item>> GetItem(string id)
@@ -45,27 +51,6 @@ namespace Training.Controllers
             return item;
         }
 
-        // GET: api/Items/GetFilesAndFoldersFromParentFolder/folder-root
-        [HttpGet("GetFilesAndFoldersFromParentFolder/{parentFolderId}")]
-        public async Task<ActionResult<IEnumerable<Object>>> GetFilesAndFoldersFromParentFolder(string parentFolderId)
-        {
-            // order by ascending
-            var query2 = await (from itemData in _context.Item
-                                join file in _context.File on itemData.Id equals file.Id into newTable
-                                from newTableData in newTable.DefaultIfEmpty()
-                                where (itemData.ParentFolderId == parentFolderId) && (itemData.Id != rootFolderId)
-                                select new { itemData , fileExtension = newTableData.Extension })
-                                .OrderBy(newTableData => newTableData.fileExtension)
-                                .ToListAsync();
-
-            if (query2 == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(query2);
-        }
-        
         // PUT: api/Items/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -102,7 +87,6 @@ namespace Training.Controllers
         [HttpPost]
         public async Task<ActionResult<Item>> PostItem(Item item)
         {
-            File f = new File();
             _context.Item.Add(item);
             try
             {
@@ -143,5 +127,6 @@ namespace Training.Controllers
         {
             return _context.Item.Any(e => e.Id == id);
         }
+        */
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Training.Database;
 using Training.Models;
+using Training.Services.Interfaces;
 
 namespace Training.Controllers
 {
@@ -14,25 +15,25 @@ namespace Training.Controllers
     [ApiController]
     public class FilesController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+        private readonly IFileServices FileServices;
 
-        public FilesController(DatabaseContext context)
+        public FilesController(IFileServices _fileServices)
         {
-            _context = context;
+            FileServices = _fileServices;
         }
 
         // GET: api/Files
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<File>>> GetFile()
+        public async Task<ActionResult<IEnumerable<File>>> GetAllFiles()
         {
-            return await _context.File.ToListAsync();
+            return await FileServices.GetAllFiles();
         }
 
         // GET: api/Files/5
         [HttpGet("{id}")]
         public async Task<ActionResult<File>> GetFile(string id)
         {
-            var file = await _context.File.FindAsync(id);
+            var file = await FileServices.GetFile(id);
 
             if (file == null)
             {
@@ -45,78 +46,24 @@ namespace Training.Controllers
         // PUT: api/Files/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFile(string id, File file)
+        public async Task<Boolean> PutFile(string id, File file)
         {
-            if (id != file.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(file).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FileExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return await FileServices.PutFile(id, file);
         }
 
         // POST: api/Files
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public bool PostFile([FromBody] File file)
+        public async Task<Boolean> PostFile(File file)
         {
-            _context.File.Add(file);
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (FileExists(file.Id))
-                {
-                    return false;
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return true;
+            return await FileServices.PostFile(file);
         }
 
         // DELETE: api/Files/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFile(string id)
+        public async Task<Boolean> DeleteFile(string id)
         {
-            var file = await _context.File.FindAsync(id);
-            if (file == null)
-            {
-                return NotFound();
-            }
-
-            _context.File.Remove(file);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool FileExists(string id)
-        {
-            return _context.File.Any(e => e.Id == id);
+            return await FileServices.DeleteFile(id);
         }
     }
 }
