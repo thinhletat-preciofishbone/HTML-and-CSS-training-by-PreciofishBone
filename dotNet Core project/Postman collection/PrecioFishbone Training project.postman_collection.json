@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "d1c7b1d4-8318-429f-804e-2798a9fdccb2",
+		"name": "PrecioFishbone Training project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "File",
+			"item": [
+				{
+					"name": "Get all files",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/Files",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get file by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/Files?id=5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Files"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post a new file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"file-test0\",\r\n    \"extension\": \"txt\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/Files",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Files"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item",
+			"item": [
+				{
+					"name": "Get folder's files and sub-folders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/Items/GetFilesAndFoldersFromParentFolder/folder-root",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Items",
+								"GetFilesAndFoldersFromParentFolder",
+								"folder-root"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post a new item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"file-test0\",\r\n    \"name\": \"File test\",\r\n    \"createdTime\": \"2021/04/20 15:02:00\",\r\n    \"createdBy\": \"Thinh Le\",\r\n    \"modifiedTime\": \"\",\r\n    \"modifiedBy\": \"Thinh Le\",\r\n    \"parentFolderId\": \"folder-root\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/Items",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Items"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
