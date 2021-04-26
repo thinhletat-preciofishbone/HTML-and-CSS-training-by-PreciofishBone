@@ -115,10 +115,8 @@ const documentTableServices = {
 	isRootFolderDirectory: () => {
 		let folderDirectory = documentTableServices.getQueryStringDirectory();
 		if (folderDirectory === null || folderDirectory === documentTableConstants.rootFolderDirectory) {
-			console.log('You are currently in the root folder');
 			return true;
 		}
-		console.log(`You are currently in the ${folderDirectory} folder`);
 		return false;
 	},
 	// using
@@ -328,7 +326,7 @@ const documentTable = {
 		let newDirectory = '';
 		if (currentDirectory === null) {
 			// directory=root
-			newDirectory = 'root'
+			newDirectory = `root/${_newFolderName}`;
 
 		} else {
 			newDirectory = `${currentDirectory}/${_newFolderName}`;
@@ -362,8 +360,9 @@ const documentTable = {
 				let clickedFolderName = event.target.getAttribute('data-name');
 				documentTable.appendQueryStringDirectory(clickedFolderName);
 
-				// Write to Browser storage 
+				// Write to Browser storage
 				let clickedDirectory = documentTableServices.getQueryStringDirectory();
+				console.log('clickedDirectory', clickedDirectory);
 				documentTable.setBrowserStorageData(clickedDirectory, clickedFolderId);
 
 				// Get clicked folder data
@@ -445,23 +444,33 @@ const documentTable = {
 	loadTableEvents: async () => {
 		// Write data to browser storage (only with the root folder?)
 		if (documentTableServices.isRootFolderDirectory()) {
+
+			// Get table data
+			let tableData = await documentTable.GetTableData(documentTableConstants.rootFolderId);
+
+			// Render table data with data recieved from API
+			documentTable.renderTableData(tableData);
+			/*
 			if (documentTableServices.getQueryStringDirectory() === null) {
 				documentTable.appendQueryStringDirectory(documentTableConstants.rootFolderDirectory);
 			}
 			documentTable.setBrowserStorageData(documentTableConstants.rootFolderDirectory, documentTableConstants.rootFolderId);
+			*/
 		}
 
-		// Get the current directory
-		let directory = documentTableServices.getQueryStringDirectory();
+		else {
+			// Get the current directory
+			let directory = documentTableServices.getQueryStringDirectory();
 
-		// get the directory' Id
-		let directoryId = documentTableServices.getBrowserStorageData(directory);
+			// get the directory' Id
+			let directoryId = documentTableServices.getBrowserStorageData(directory);
 
-		// Get table data
-		let tableData = await documentTable.GetTableData(directoryId);
+			// Get table data
+			let tableData = await documentTable.GetTableData(directoryId);
 
-		// Render table data with data recieved from API
-		documentTable.renderTableData(tableData);
+			// Render table data with data recieved from API
+			documentTable.renderTableData(tableData);
+        }
 	},
 	loadEvents: () => {
 		documentTable.loadMenuBarEvents();
