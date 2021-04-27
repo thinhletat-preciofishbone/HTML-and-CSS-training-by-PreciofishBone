@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Training.Services;
 using Training.Services.AbstractServices;
 using Training.Services.Interfaces;
+using Microsoft.Identity.Web.UI;
 
 namespace Training
 {
@@ -38,19 +39,30 @@ namespace Training
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
 
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ApplicationDatabase")));
-
+            /*
             services.AddControllers();
+            */
+            services.AddControllersWithViews(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
 
-            services.AddScoped<IItemServices, ItemServices>();
-            services.AddScoped<IFileServices, FileServices>();
-            services.AddScoped<IFolderServices, FolderServices>();
+            services.AddRazorPages()
+                .AddMicrosoftIdentityUI();
+            
             services.AddScoped<AItemDatabaseServices, ItemDatabaseServices>();
             services.AddScoped<AFileDatabaseServices, FileDatabaseServices>();
             services.AddScoped<AFolderDatabaseServices, FolderDatabaseServices>();
+            services.AddScoped<IItemServices, ItemServices>();
+            services.AddScoped<IFileServices, FileServices>();
+            services.AddScoped<IFolderServices, FolderServices>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Training", Version = "v1" });
@@ -86,8 +98,9 @@ namespace Training
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "Default",
-                    pattern: "{Controller=Home}/{action = Index}/{id?}");
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}"); 
+                endpoints.MapRazorPages();
             });
         }
     }

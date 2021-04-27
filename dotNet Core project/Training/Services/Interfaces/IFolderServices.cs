@@ -7,7 +7,7 @@ using Training.Models;
 
 namespace Training.Services.Interfaces
 {
-    public interface IFolderServices
+    public interface IFolderServices : IServices
     {
         public Task<ActionResult<IEnumerable<Folder>>> GetAllFolders();
         public Task<ActionResult<Folder>> GetFolder(string id);

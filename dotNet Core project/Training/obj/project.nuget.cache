@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "V5b8u7Us53ybAUKhK/jG91nbui8JH4trDEgEPsabj3y3tbht1SRhry08cln96We5aNMsQNTD6RJW7Pa06Vl5Zg==",
+  "dgSpecHash": "WWIgygfi6U/oaXhkAWI5PiivOn7vcBtQ4lot+WVPaq9FHOmh1N0sCtYhhPCGT7o7DnuHz3g89DZtKZX8hbs2Pg==",
   "success": true,
   "projectFilePath": "C:\\Users\\thl3\\Documents\\Projects\\Training-course-by-PrecioFishbone\\dotNet Core project\\Training\\Training.csproj",
   "expectedPackageFiles": [
@@ -9,8 +9,8 @@
     "C:\\Users\\thl3\\.nuget\\packages\\azure.security.keyvault.certificates\\4.1.0\\azure.security.keyvault.certificates.4.1.0.nupkg.sha512",
     "C:\\Users\\thl3\\.nuget\\packages\\azure.security.keyvault.secrets\\4.1.0\\azure.security.keyvault.secrets.4.1.0.nupkg.sha512",
     "C:\\Users\\thl3\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
-    "C:\\Users\\thl3\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.5\\microsoft.aspnetcore.authentication.jwtbearer.5.0.5.nupkg.sha512",
-    "C:\\Users\\thl3\\.nuget\\packages\\microsoft.aspnetcore.authentication.openidconnect\\5.0.5\\microsoft.aspnetcore.authentication.openidconnect.5.0.5.nupkg.sha512",
+    "C:\\Users\\thl3\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.0\\microsoft.aspnetcore.authentication.jwtbearer.5.0.0.nupkg.sha512",
+    "C:\\Users\\thl3\\.nuget\\packages\\microsoft.aspnetcore.authentication.openidconnect\\5.0.0\\microsoft.aspnetcore.authentication.openidconnect.5.0.0.nupkg.sha512",
     "C:\\Users\\thl3\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\thl3\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\thl3\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\5.0.0\\microsoft.aspnetcore.razor.language.5.0.0.nupkg.sha512",
