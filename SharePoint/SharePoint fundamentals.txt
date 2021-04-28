@@ -1,0 +1,38 @@
+- Farm and tenant: 
+	+ farm (managed by microsoft): backup and recovery, database management, security and permissions, service application, ... được setup sẵn bởi Microsoft
+	+ tenant (managed by an organization or individual): use and customize site collection.
+
+- Hub site: Connects site collections that support:
+	● Discover related content such as news and other site activities.
+	● Apply common navigation, branding, and site structure across associated sites.
+	● Search across all associated sites.
+
+- Classic vs Modern SharePoint
+	1/ Server and Cloud?
+		+ Classic SharePoint is legacy SharePoint framework that’s been the foundation of SharePoint for close to two decades. is now outdated.
+		+ Modern SharePoint is the newer platform, built for SharePoint Online as part of Office 365. Overall, it is faster, easier to use and has been optimised for mobility.
+
+	2/ Hubsite
+		+ In Classic SharePoint, a Site Collection = one top-level site and all sub-sites below it.
+		+ In Modern SharePoint, it’s recommended each new site is a Site Collection, connected together through a Hub site.
+		
+	3/ Webpart
+		+ In Classic, bad user experience and require customisation for many changes.
+		+ Modern web parts and pages offer improved functionality, performance.
+
+	4/ Mobile Responsive
+		+ In Modern SharePoint, it is quicker, more efficient, easier to use, mobile responsive and as a result
+
+- Site Contents: add a list, app, documents or sub-site
+
+	- Content type: Một loại dữ liệu tự định nghĩa và có thể gán nó vào một list, document, ...
+	
+		- Field: column (single line data, lookup column, choice ...)
+	
+	- Khi một list được tạo ra thì ta có thể gán content type cho một list và có thể tạo ra những item được định nghĩa trong content type đó.
+		
+_ Item: a row data in list, document, ... or a page in a sub-site.
+
+- Site Settings: permission, navigation, ...
+
+
