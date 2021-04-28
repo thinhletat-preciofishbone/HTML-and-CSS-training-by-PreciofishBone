@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package dslVersion="1.0.0.0" 
+        Id="bf0ae5bd-e014-4062-b92c-fdadb54cd62d" 
+        solutionId="bf0ae5bd-e014-4062-b92c-fdadb54cd62d" 
+        xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" 
+        name="JavaScriptCsomDemo"
+        sharePointProductVersion="15.0">
+  <features>
+        <featureReference itemId="99485440-147b-448a-b812-24f2c051b317" />
+  </features>
+</package>
