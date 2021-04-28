@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package dslVersion="1.0.0.0" 
+        Id="af638360-a721-4685-b9d7-dbae4d9fb743" 
+        solutionId="af638360-a721-4685-b9d7-dbae4d9fb743" 
+        xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" 
+        name="JavaScriptDemo"
+        sharePointProductVersion="15.0">
+  <features>
+        <featureReference itemId="af484aa4-00db-4093-81c9-dca88c749b01" />
+  </features>
+</package>

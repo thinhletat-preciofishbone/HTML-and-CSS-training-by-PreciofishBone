@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{98D39F43-C3EC-4225-9719-99EF00FD6928}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JavaScriptDemo</RootNamespace>
+    <AssemblyName>JavaScriptDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetOfficeVersion>15.0</TargetOfficeVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <IncludeAssemblyInPackage>False</IncludeAssemblyInPackage>
+    <ProjectMode>SharePointApp</ProjectMode>
+    <AppFeaturePartId>{3ad65a20-f4f0-46b1-bbae-dd1bed691cd2}</AppFeaturePartId>
+    <WspPartId>{79139dfc-5c04-480e-9461-17200cea9e1f}</WspPartId>
+    <CspkgPartId>{3b9e9133-18ab-4357-b0a3-f16fb41bfe2a}</CspkgPartId>
+    <SqlPackagePartId>{24b297ff-9da0-4178-8b82-af40750e6e2e}</SqlPackagePartId>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Categories\CategoriesInstance\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{aefba49e-45bb-42ed-b08f-f50122879d51}</SharePointProjectItemId>
+    </None>
+    <None Include="Categories\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{ea55e030-1487-4502-ba06-53b7cafaf7d5}</SharePointProjectItemId>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Pages\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{f875a00e-ed1b-4786-95ee-f936a1451757}</SharePointProjectItemId>
+    </None>
+    <Content Include="Categories\CategoriesInstance\Elements.xml" />
+    <Content Include="Categories\Elements.xml" />
+    <Content Include="Categories\Schema.xml" />
+    <Content Include="Pages\Elements.xml" />
+    <Content Include="Pages\Default.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Products\ProductsInstance\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{f956a7b1-9604-466d-a43f-07da74f9c867}</SharePointProjectItemId>
+    </None>
+    <None Include="Products\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{f647e4d0-7d5d-446e-a3a3-d6ddf11766db}</SharePointProjectItemId>
+    </None>
+    <None Include="Scripts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{24b297ff-9da0-4178-8b82-af40750e6e2e}</SharePointProjectItemId>
+    </None>
+    <Content Include="Products\Elements.xml" />
+    <Content Include="Products\ProductsInstance\Elements.xml" />
+    <Content Include="Products\Schema.xml" />
+    <Content Include="Scripts\Elements.xml" />
+    <Content Include="Scripts\App.js" />
+    <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jsrender.js" />
+    <Content Include="Scripts\_references.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{3b045a34-bcdd-4340-b7bd-446ac64808ca}</SharePointProjectItemId>
+    </None>
+    <Content Include="Content\Elements.xml" />
+    <Content Include="Content\App.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\AppIcon.png">
+      <OpcRelationship>manifest-icon</OpcRelationship>
+    </Content>
+    <Content Include="Images\Elements.xml" />
+    <None Include="Images\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{078156e0-ad3d-48a3-b67f-c4b6c7c2d29b}</SharePointProjectItemId>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Package\Package.package">
+      <PackageId>{af638360-a721-4685-b9d7-dbae4d9fb743}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+    <None Include="Features\Feature1\Feature1.feature">
+      <FeatureId>{af484aa4-00db-4093-81c9-dca88c749b01}</FeatureId>
+    </None>
+    <None Include="Features\Feature1\Feature1.Template.xml">
+      <DependentUpon>Feature1.feature</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <AppManifestFile Include="AppManifest.xml">
+      <SubType>Designer</SubType>
+    </AppManifestFile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0'">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>
