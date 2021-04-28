@@ -1,4 +1,0 @@
-﻿<%@ServiceHost 
-    Language="C#" 
-    Service="JavaScriptFarmDemos.Services.TasksService, JavaScriptFarmDemos, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1bd9b0718a2f9c2b" 
-    Factory="Microsoft.SharePoint.Client.Services.MultipleBaseAddressWebServiceHostFactory, Microsoft.SharePoint.Client.ServerRuntime, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
