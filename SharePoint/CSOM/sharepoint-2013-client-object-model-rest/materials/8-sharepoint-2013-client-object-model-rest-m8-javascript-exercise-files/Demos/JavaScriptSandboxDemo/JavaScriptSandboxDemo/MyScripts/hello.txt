@@ -1,0 +1,24 @@
+﻿<script type="text/javascript">
+	jQuery(document).ready(function () {
+		ExecuteOrDelayUntilScriptLoaded(initialize, "sp.js");
+	});
+
+	function initialize() {
+		var context = SP.ClientContext.get_current();
+		var web = context.get_web();
+		context.load(web, "Title");
+		context.executeQueryAsync(success, fail);
+
+		function success() {
+			var message = jQuery("#message");
+			message.text("This site is named " + web.get_title());
+		}
+
+		function fail(sender, args) {
+			alert("Call failed. Error: " +
+				args.get_message());
+		}
+	}
+</script>
+
+<div id="message"></div>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="MyScripts" Url="Style Library/Scripts" RootWebOnly="TRUE">
+    <File Path="MyScripts\jquery-1.8.3.js" Url="jquery-1.8.3.js" Type="GhostableInLibrary" />
+    <File Path="MyScripts\jquery-1.8.3.min.js" Url="jquery-1.8.3.min.js" Type="GhostableInLibrary" />
+    <File Path="MyScripts\hello.txt" Url="hello.txt" Type="GhostableInLibrary" IgnoreIfAlreadyExists="True" />
+  </Module>
+
+  <CustomAction
+     Id="LoadJQuery"
+     ScriptSrc="~SiteCollection/Style Library/Scripts/jquery-1.8.3.min.js"
+     Location="ScriptLink"
+     Sequence="10">
+  </CustomAction>  
+</Elements>

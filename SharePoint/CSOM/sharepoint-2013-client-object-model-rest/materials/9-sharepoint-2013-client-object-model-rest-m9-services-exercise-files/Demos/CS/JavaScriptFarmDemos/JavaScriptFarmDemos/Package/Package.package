@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="1619f238-a345-422d-8787-23f7cafa8454" solutionId="1619f238-a345-422d-8787-23f7cafa8454" resetWebServer="false" sharePointProductVersion="15.0" name="JavaScriptFarmDemos" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <projectItems>
+    <projectItemReference itemId="3b9e722e-7d22-4bbd-b263-af45b84e6c24" />
+    <projectItemReference itemId="28ef2180-92b4-49c7-988a-d857db5bdc79" />
+  </projectItems>
+</package>
